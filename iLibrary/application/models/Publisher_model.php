@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Author_model extends CI_Model {
+class Publisher_model extends CI_Model {
 
-	private $table = 'author';
+	private $table = 'publisher';
 
 	function __construct()		//constructer    繼承CI_Modle的constructer
     {
@@ -15,9 +15,9 @@ class Author_model extends CI_Model {
     	return $query->result();
     }
 
-    public function find($ssn)
+    public function find($id)
     {
-    	$query = $this->db->get_where($this->table, ['ssn' => $ssn);
+    	$query = $this->db->get_where($this->table, ['id' => $id]);
     	if ($query->result())
     		return $query->result()[0];
     	else
@@ -30,15 +30,15 @@ class Author_model extends CI_Model {
     	return $query->result();
     }
 
-    public function insert($author)
+    public function insert($publisher)
     {
-    	$result = $this->db->insert($this->table, $author);
+    	$result = $this->db->insert($this->table, $publisher);
     	return $result;
     }
 
-    public function update($author,$condition)
+    public function update($publisher,$condition)
     {
-    	$result = $this->db->update($this->table, $author, $condition);
+    	$result = $this->db->update($this->table, $publisher, $condition);
     	return $result;
     }
 
@@ -54,7 +54,7 @@ class Author_model extends CI_Model {
 
     public function book($id)
     {
-    	$query = $this->db->get_where('book', ['auther_id' => $id);
+    	$query = $this->db->get_where('book', ['publisher_id' => $id);
     	return $query->result();
     }
 }

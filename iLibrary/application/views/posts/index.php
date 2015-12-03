@@ -9,7 +9,7 @@
 <table class="table">
 	<tr>
 		<th>#</th>
-		<th>Title</th>
+		<th>Title1</th>
 		<th>Publish at</th>
 		<th>Edit</th>
 		<th>Remove</th>
