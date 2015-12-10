@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Book_model extends CI_Model {
+class Borrow_return_model extends CI_Model {
 
-	private $table = 'book';
+	private $table = 'borrow_return';
 
 	function __construct()		//constructer    繼承CI_Modle的constructer
     {
@@ -30,15 +30,15 @@ class Book_model extends CI_Model {
     	return $query->result();
     }
 
-    public function insert($book)
+    public function insert($borrow_return)
     {
-    	$result = $this->db->insert($this->table, $book);
+    	$result = $this->db->insert($this->table, $borrow_return);
     	return $result;
     }
 
-    public function update($book, $condition)
+    public function update($borrow_return, $condition)
     {
-    	$result = $this->db->update($this->table, $book, $condition);
+    	$result = $this->db->update($this->table, $borrow_return, $condition);
     	return $result;
     }
 
@@ -52,28 +52,16 @@ class Book_model extends CI_Model {
     		return $result;
     }
 
-    public function author($id)
+    public function copy_book($id)
     {
-    	$query = $this->db->get_where('author', ['id' => $id);
+        $query = $this->db->query("SELECT `copy_book` FROM {$table} WHERE `c_id` = '{$id}'");
+    	//$query = $this->db->get_where('copy_book', ['c_id' => $id);
     	return $query->result();
     }
 
-    public function publisher($id)
+    public function user($ssn)
     {
-        $query = $this->db->get_where('publisher', ['id' => $id);
+        $query = $this->db->get_where('user', ['ssn' => $ssn]);
         return $query->result();
     }
-$
-    public function copy_book($isbn)
-    {
-        $query = $this->db->get_where('copy_book', ['isbn' => $isbn);
-        return $query->result();
-    }
-
-    public function rate($isab)
-    {
-        $query = $this->db->get_where('rate', ['isbn' => $isbn);
-        return $query->result();
-    }
-
 }

@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Reserve_model extends CI_Model {
+class Copy_book_model extends CI_Model {
 
-	private $table = 'reserve';
+	private $table = 'copy_book';
 
 	function __construct()		//constructer    繼承CI_Modle的constructer
     {
@@ -17,7 +17,7 @@ class Reserve_model extends CI_Model {
 
     public function find($id)
     {
-    	$query = $this->db->get_where($this->table, ['id' => $id]);
+    	$query = $this->db->get_where($this->table, ['c_id' => $id]);
     	if ($query->result())
     		return $query->result()[0];
     	else
@@ -30,15 +30,15 @@ class Reserve_model extends CI_Model {
     	return $query->result();
     }
 
-    public function insert($reserve)
+    public function insert($copy_book)
     {
-    	$result = $this->db->insert($this->table, $reserve);
+    	$result = $this->db->insert($this->table, $copy_book);
     	return $result;
     }
 
-    public function update($reserve,$condition)
+    public function update($copy_book, $condition)
     {
-    	$result = $this->db->update($this->table, $reserve, $condition);
+    	$result = $this->db->update($this->table, $copy_book, $condition);
     	return $result;
     }
 
@@ -52,15 +52,9 @@ class Reserve_model extends CI_Model {
     		return $result;
     }
 
-    public function copy_book($id)
+    public function book($id)
     {
-    	$query = $this->db->get_where('copy_book', ['c_id' => $id);
+    	$query = $this->db->get_where('book', ['isbn' => $id]);
     	return $query->result();
-    }
-
-    public function user($ssn)
-    {
-        $query = $this->db->get_where('user', ['ssn' => $ssn);
-        return $query->result();
     }
 }

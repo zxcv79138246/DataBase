@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Borrow_return_model extends CI_Model {
+class Book_model extends CI_Model {
 
-	private $table = 'borrow_return';
+	private $table = 'book';
 
 	function __construct()		//constructer    繼承CI_Modle的constructer
     {
@@ -15,9 +15,9 @@ class Borrow_return_model extends CI_Model {
     	return $query->result();
     }
 
-    public function find($id)
+    public function find($isbn)
     {
-    	$query = $this->db->get_where($this->table, ['id' => $id]);
+    	$query = $this->db->get_where($this->table, ['isbn' => $isbn]);
     	if ($query->result())
     		return $query->result()[0];
     	else
@@ -30,15 +30,15 @@ class Borrow_return_model extends CI_Model {
     	return $query->result();
     }
 
-    public function insert($borrow_return)
+    public function insert($book)
     {
-    	$result = $this->db->insert($this->table, $borrow_return);
+    	$result = $this->db->insert($this->table, $book);
     	return $result;
     }
 
-    public function update($borrow_return, $condition)
+    public function update($book, $condition)
     {
-    	$result = $this->db->update($this->table, $borrow_return, $condition);
+    	$result = $this->db->update($this->table, $book, $condition);
     	return $result;
     }
 
@@ -52,16 +52,28 @@ class Borrow_return_model extends CI_Model {
     		return $result;
     }
 
-    public function copy_book($id)
+    public function author($id)
     {
-        $query = $this->db->query("SELECT `copy_book` FROM {$table} WHERE `c_id` = '{$id}'");
-    	//$query = $this->db->get_where('copy_book', ['c_id' => $id);
+    	$query = $this->db->get_where('author', ['id' => $id]);
     	return $query->result();
     }
 
-    public function user($ssn)
+    public function publisher($id)
     {
-        $query = $this->db->get_where('user', ['ssn' => $ssn);
+        $query = $this->db->get_where('publisher', ['id' => $id]);
         return $query->result();
     }
+$
+    public function copy_book($isbn)
+    {
+        $query = $this->db->get_where('copy_book', ['isbn' => $isbn]);
+        return $query->result();
+    }
+
+    public function rate($isab)
+    {
+        $query = $this->db->get_where('rate', ['isbn' => $isbn]);
+        return $query->result();
+    }
+
 }

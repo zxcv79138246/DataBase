@@ -54,7 +54,7 @@ class Publisher_model extends CI_Model {
 
     public function book($id)
     {
-    	$query = $this->db->get_where('book', ['publisher_id' => $id);
+    	$query = $this->db->get_where('book', ['publisher_id' => $id]);
     	return $query->result();
     }
 }

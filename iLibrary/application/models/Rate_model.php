@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Copy_book_model extends CI_Model {
+class Rate_model extends CI_Model {
 
-	private $table = 'copy_book';
+	private $table = 'rate';
 
 	function __construct()		//constructer    繼承CI_Modle的constructer
     {
@@ -30,15 +30,15 @@ class Copy_book_model extends CI_Model {
     	return $query->result();
     }
 
-    public function insert($copy_book)
+    public function insert($rate)
     {
-    	$result = $this->db->insert($this->table, $copy_book);
+    	$result = $this->db->insert($this->table, $rate);
     	return $result;
     }
 
-    public function update($copy_book, $condition)
+    public function update($rate, $condition)
     {
-    	$result = $this->db->update($this->table, $copy_book, $condition);
+    	$result = $this->db->update($this->table, $rate, $condition);
     	return $result;
     }
 
@@ -54,7 +54,13 @@ class Copy_book_model extends CI_Model {
 
     public function book($id)
     {
-    	$query = $this->db->get_where('book', ['isbn' => $id);
+    	$query = $this->db->get_where('book', ['isbn' => $id]);
     	return $query->result();
+    }
+
+    public function user($ssn)
+    {
+        $query = $this->db->get_where('user', ['ssn' => $ssn]);
+        return $query->result();
     }
 }

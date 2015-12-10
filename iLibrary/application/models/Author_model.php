@@ -15,9 +15,9 @@ class Author_model extends CI_Model {
     	return $query->result();
     }
 
-    public function find($ssn)
+    public function find($id)
     {
-    	$query = $this->db->get_where($this->table, ['ssn' => $ssn);
+    	$query = $this->db->get_where($this->table, ['id' => $id]);
     	if ($query->result())
     		return $query->result()[0];
     	else
@@ -54,7 +54,7 @@ class Author_model extends CI_Model {
 
     public function book($id)
     {
-    	$query = $this->db->get_where('book', ['auther_id' => $id);
+    	$query = $this->db->get_where('book', ['auther_id' => $id]);
     	return $query->result();
     }
 }

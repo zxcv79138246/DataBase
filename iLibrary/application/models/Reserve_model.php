@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_model extends CI_Model {
+class Reserve_model extends CI_Model {
 
-	private $table = 'user';
+	private $table = 'reserve';
 
 	function __construct()		//constructer    繼承CI_Modle的constructer
     {
@@ -30,15 +30,15 @@ class User_model extends CI_Model {
     	return $query->result();
     }
 
-    public function insert($user)
+    public function insert($reserve)
     {
-    	$result = $this->db->insert($this->table, $user);
+    	$result = $this->db->insert($this->table, $reserve);
     	return $result;
     }
 
-    public function update($user, $condition)
+    public function update($reserve,$condition)
     {
-    	$result = $this->db->update($this->table, $user, $condition);
+    	$result = $this->db->update($this->table, $reserve, $condition);
     	return $result;
     }
 
@@ -52,29 +52,15 @@ class User_model extends CI_Model {
     		return $result;
     }
 
-    public function borrow_return($ssn)
+    public function copy_book($id)
     {
-    	$query = $this->db->get_where('borrow_return', ['ssn' => $ssn);
+    	$query = $this->db->get_where('copy_book', ['c_id' => $id]);
     	return $query->result();
     }
 
-    public function reserve($ssn)
+    public function user($ssn)
     {
-        $query = $this->db->get_where('reserve', ['ssn' => $ssn);
+        $query = $this->db->get_where('user', ['ssn' => $ssn]);
         return $query->result();
     }
-
-    public function reserve($ssn)
-    {
-        $query = $this->db->get_where('reserve', ['ssn' => $ssn);
-        return $query->result();
-    }
-
-    public function rate($ssn)
-    {
-        $query = $this->db->get_where('rate', ['ssn' => $ssn);
-        return $query->result();
-    }
-
-
 }
