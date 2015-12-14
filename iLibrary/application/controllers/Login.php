@@ -25,17 +25,17 @@ class Login extends CI_Controller
 				'priority' => $login->proiorty,
 			];
 			$this->session->set_userdata($data);
-			redirect('index/index');
+			redirect('/index');
 		}
 		else{
 			$this->session->set_flashdata('login_fail_message','登入失敗,帳號或密碼錯誤');
-			redirect('index/index');
+			redirect('/index');
 		}
 	}
 
 	public function logout()
 	{
 		$this->session->sess_destroy();
-		redirect('index/index');
+		redirect('/index');
 	}
 }
