@@ -13,10 +13,10 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
+				<li <?php if ($this->uri->segment(1, 0) == 'index') echo 'class="active"' ?>><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
 				<li><a href="#">預約追蹤</a></li>
 				<li><a href="#">借書紀錄</a></li>
-				<li><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
+				<li <?php if ($this->uri->segment(1, 0) == 'usermanage') echo 'class="active"' ?>><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
 				<li><a href="#">書籍管理</a></li>
 				<li><a href="#">借還書管理</a></li>
 			</ul>
