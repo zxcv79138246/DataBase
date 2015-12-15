@@ -1,6 +1,6 @@
-			<div class="container">
+			<div class="power">
 				<hr></hr>
-				<p class="right">2015 Design by iLibrary</p>
+				<p>2015 power by iLibrary</p>
 			</div>
 		</div>
 	</body>
