@@ -12,10 +12,10 @@ class Usermanage extends CI_Controller
 	}
 
 	public function index(){
-		$user = $this->user->all();
+		$users = $this->user->all();
 		$this->load->view('layout/header');
 		$this->load->view('layout/navbar');
-		$this->load->view('library/usermanage', compact('user'));
+		$this->load->view('library/usermanage', compact('users'));
 		$this->load->view('layout/footer');
 	}
 }
