@@ -15,9 +15,9 @@ class Book_model extends CI_Model {
     	return $query->result();
     }
 
-    public function find($isbn)
+    public function find($id)
     {
-    	$query = $this->db->get_where($this->table, ['isbn' => $isbn]);
+    	$query = $this->db->get_where($this->table, ['b_id' => $id]);
     	if ($query->result())
     		return $query->result()[0];
     	else

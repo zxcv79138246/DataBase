@@ -56,12 +56,7 @@
 									<img class="img-thumbnail book-image" src="http://ext.pimg.tw/b318ccc/1424317423-466273065.png" alt="...">
 								</td>
 								<td width="90%" valign="top">
-									<span>名子:</span>
-								</td>
-							</tr>
-							<tr>
-								<td valign="top">
-									<span>分類:</span>
+									<span>書名：</span>
 								</td>
 							</tr>
 						</table>
