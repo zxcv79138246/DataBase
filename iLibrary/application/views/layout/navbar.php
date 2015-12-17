@@ -7,7 +7,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo site_url('/index') ?>" >
+			<a class="navbar-brand" href="<?php echo site_url('/index') ?>">
 				<span class="glyphicon glyphicon-book"></span> iLibary
 			</a>
 		</div>

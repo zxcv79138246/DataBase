@@ -1,12 +1,3 @@
-<?php if ($this->session->flashdata('user_message')): ?>
-	<div class="alert alert-danger alert-dismissible fade in" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		<p class="text-center"><?php echo $this->session->flashdata('user_message') ?></p>
-	</div>
-<?php endif ?>
-
 <div class="container">
 	<div class="row form-group">
 		<div class="col-md-3">

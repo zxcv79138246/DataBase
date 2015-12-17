@@ -29,7 +29,9 @@ class Usermanage extends CI_Controller
 	{
 		if ($users = $this->user->destory(['ssn' => $ssn]))
 		{
-			$this->session->set_flashdata('user_message', "{$users[0]->name} 已被刪除");
+			$this->session->set_flashdata('message', "{$users[0]->name} 已被刪除");
+			$this->session->set_flashdata('type', 'warning');
+
 		}
 		redirect('/usermanage');
 
@@ -46,11 +48,18 @@ class Usermanage extends CI_Controller
 		if ($this->verification())
 		{
 			$userdata = $this->input->post();     //抓取頁面所有post
-			if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']])) {
+			if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']])) 
+			{
 				if ($users = $this->user->update($userdata,['ssn'=> $ssn]))
-					$this->session->set_flashdata('user_message', "{$users[0]->name} 修改成功");
+				{
+					$this->session->set_flashdata('message', "{$users[0]->name} 修改成功");
+					$this->session->set_flashdata('type', 'success');
+
+				}
 			} else {
-				$this->session->set_flashdata('user_message', "SSN,Email重複");
+				$this->session->set_flashdata('message', "SSN,Email重複");
+				$this->session->set_flashdata('type', 'danger');
+
 			}
 
 		}
@@ -64,12 +73,23 @@ class Usermanage extends CI_Controller
 
 	public function store()
 	{
-		$userdata = $this->input->post();
-		if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']])) {
-			if ($users = $this->user->insert($userdata))
-				$this->session->set_flashdata('user_message', "新增使用者：{$userdata['name']} 成功");
-		} else {
-			$this->session->set_flashdata('user_message', "SSN,Email重複");
+		if ($this->verification())
+		{
+			$userdata = $this->input->post();
+			if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']], 1)) 
+			{
+				var_dump(123);
+				if ($users = $this->user->insert($userdata))
+				{
+					$this->session->set_flashdata('message', "新增使用者：{$userdata['name']} 成功");
+					$this->session->set_flashdata('type', 'success');
+
+				}
+			} else {
+				$this->session->set_flashdata('message', "SSN,Email重複");
+				$this->session->set_flashdata('type', 'danger');
+
+			}
 		}
 		redirect('/usermanage');
 	}
@@ -86,7 +106,10 @@ class Usermanage extends CI_Controller
 		$this->form_validation->set_rules('priority','Priority','required');
 
 		if (!$this->form_validation->run())
-			$this->session->set_flashdata('user_message', "有欄位為空值");
+		{
+			$this->session->set_flashdata('message', "有欄位為空值");
+			$this->session->set_flashdata('type', 'danger');
+		}
 		else
 			return true;
 	}
@@ -97,7 +120,9 @@ class Usermanage extends CI_Controller
 		$users = $this->user->search(['ssn','name'],$condition);
 		if (!$users)
 		{
-			$this->session->set_flashdata('user_message', "搜尋不到相似資料或內容不存在");
+			$this->session->set_flashdata('message', "搜尋不到相似資料或內容不存在");
+			$this->session->set_flashdata('type', 'danger');
+
 			redirect('/usermanage');
 		}else
 		{

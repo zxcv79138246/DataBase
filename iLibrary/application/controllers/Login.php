@@ -28,7 +28,8 @@ class Login extends CI_Controller
 			redirect('/index');
 		}
 		else{
-			$this->session->set_flashdata('login_fail_message','登入失敗,帳號或密碼錯誤');
+			$this->session->set_flashdata('message','登入失敗,帳號或密碼錯誤');
+			$this->session->set_flashdata('type', 'danger');
 			redirect('/index');
 		}
 	}

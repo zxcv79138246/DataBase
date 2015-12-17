@@ -1,12 +1,3 @@
-<?php if ($this->session->flashdata('login_fail_message')): ?>
-	<div class="alert alert-danger alert-dismissible fade in" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-		<p class="text-center"><?php echo $this->session->flashdata('login_fail_message') ?></p>
-	</div>
-<?php endif ?>
-
 <div class="jumbotron title-image title-page">
   <div class="container">
     <h1><span class="glyphicon glyphicon-book"></span> iLibrary</h1>

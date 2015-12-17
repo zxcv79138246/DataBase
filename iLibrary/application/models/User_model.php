@@ -24,14 +24,14 @@ class User_model extends CI_Model {
     		return false;
     }
 
-    public function duplicateCheck($data)
+    public function duplicateCheck($data, $is_create = 0)
     {
         $this->db->from($this->table);
         foreach ($data as $key => $value) {
             $this->db->or_where($key, $value);
         }
         $query = $this->db->get();
-        return $query->num_rows() > 1;
+        return ($query->num_rows() + $is_create) > 1;
     }
 
     public function login($account)
