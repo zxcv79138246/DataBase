@@ -3,10 +3,11 @@
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
-		<?php echo $this->session->flashdata('login_fail_message') ?>;
+		<p class="text-center"><?php echo $this->session->flashdata('login_fail_message') ?></p>
 	</div>
 <?php endif ?>
-<div class="jumbotron title-image padding-bottom-30">
+
+<div class="jumbotron title-image title-page">
   <div class="container">
     <h1><span class="glyphicon glyphicon-book"></span> iLibrary</h1>
   	<p>首頁</p>

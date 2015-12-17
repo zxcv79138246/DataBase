@@ -22,7 +22,7 @@ class Login extends CI_Controller
 			$data =[
 				'ssn' => $login->ssn,
 				'name' => $login->name,
-				'priority' => $login->proiorty,
+				'priority' => $login->priority,
 			];
 			$this->session->set_userdata($data);
 			redirect('/index');

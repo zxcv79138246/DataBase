@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" >
+<nav class="navbar navbar-inverse navbar-static-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -7,7 +7,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo site_url('index/index') ?>" >
+			<a class="navbar-brand" href="<?php echo site_url('/index') ?>" >
 				<span class="glyphicon glyphicon-book"></span> iLibary
 			</a>
 		</div>
@@ -16,7 +16,7 @@
 				<li <?php if ($this->uri->segment(1, 0) == 'index') echo 'class="active"' ?>><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
 				<li><a href="#">預約追蹤</a></li>
 				<li><a href="#">借書紀錄</a></li>
-				<li <?php if ($this->uri->segment(1, 0) == 'usermanage') echo 'class="active"' ?>><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
+				<li <?php if ($this->uri->segment(1) == 'usermanage') echo 'class="active"' ?>><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
 				<li><a href="#">書籍管理</a></li>
 				<li><a href="#">借還書管理</a></li>
 			</ul>
@@ -37,7 +37,7 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
-<div style="padding:25px;"></div>
+
 <div class="modal login-modal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">
 	    <div class="modal-content">
@@ -47,11 +47,11 @@
 		    </div>
 		    <form action="<?php echo site_url('login/login') ?>" method="POST">
       			<div class="modal-body" id="modal-login-body">
-        			<div class="input-group">
+        			<div class="input-group form-group">
 		            	<span class="input-group-addon">帳號</span>
 		            	<input type="text" class="form-control" name = 'e-mail'>
 		        	</div>
-		        	<div class="input-group">
+		        	<div class="input-group form-group">
 		            	<span class="input-group-addon" name = 'password'>密碼</span>
 		            	<input type="password" class="form-control"  name = 'password'>
 		        	</div>

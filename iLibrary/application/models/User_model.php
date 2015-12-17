@@ -24,6 +24,16 @@ class User_model extends CI_Model {
     		return false;
     }
 
+    public function duplicateCheck($data)
+    {
+        $this->db->from($this->table);
+        foreach ($data as $key => $value) {
+            $this->db->or_where($key, $value);
+        }
+        $query = $this->db->get();
+        return $query->num_rows() > 1;
+    }
+
     public function login($account)
     {
         $query = $this->db->get_where($this->table,['email' => $account['e-mail'], 'password' => $account['password']]);
@@ -49,8 +59,8 @@ class User_model extends CI_Model {
 
     public function update($user, $condition)
     {
-    	$result = $this->db->update($this->table, $user, $condition);
-    	return $result;
+        $result = $this->db->update($this->table, $user, $condition);
+        return $result;
     }
 
     public function destory($condition)
@@ -61,6 +71,16 @@ class User_model extends CI_Model {
     		return $data;
     	else
     		return $result;
+    }
+
+    public function search($fields, $condition)
+    {
+        $this->db->from($this->table);
+        foreach ($fields as $field) {
+            $this->db->or_like($field, $condition);
+        }
+        $query = $this->db->get();
+        return ($query->result()) ? $query->result() : false;
     }
 
     public function borrow_return($ssn)
@@ -80,6 +100,4 @@ class User_model extends CI_Model {
         $query = $this->db->get_where('rate', ['ssn' => $ssn]);
         return $query->result();
     }
-
-
 }

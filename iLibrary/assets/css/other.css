@@ -3,24 +3,17 @@
 	background-size : cover;
 }
 
-.padding-bottom-30{
-	padding-bottom: 30px; 
+.title-page{
+	margin-top: -20px;
 }
 
 .book-image{
-	height: 150px;
-	border-radius: 10px;
+	height: 30%;
+	border-radius: 15px;
 }
 
 .book-style{
 	background-color:rgba(200, 200, 200, 0.3);
 	border-radius: 10px;
 	width: 100%;
-}
-
-.power{
-	display: block;
-	position: absolute;
-	bottom: 10px;
-	left: 50%;
 }
