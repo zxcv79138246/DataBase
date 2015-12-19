@@ -38,7 +38,7 @@
 	</div><!-- /.container-fluid -->
 </nav>
 
-<div class="modal login-modal" tabindex="-1" role="dialog">
+<div class="modal login-modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">
 	    <div class="modal-content">
 		    <div class="modal-header">

@@ -14,7 +14,7 @@
 			<a href="#" data-url="<?php echo site_url('usermanage/create') ?>" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit-modal">＋NEW</a>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row table-responsive">
 		<table class="table table-hover">
 			<tr>
 				<th>SSN</th>
@@ -27,7 +27,7 @@
 				<th>Priority</th>
 				<th>Edit</th>
 				<th>Remove</th>
-				<?php foreach ($users as $key => $user): ?>
+			<?php foreach ($users as $key => $user): ?>
 			<tr>
 				<td><?php echo $user->ssn ?></td>
 				<td><?php echo $user->sex ?></td>

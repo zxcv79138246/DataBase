@@ -10,9 +10,11 @@ class Usermanage extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_model', 'user');
-		if ($this->session->userdata('priority')!=2)
+		if ($this->session->userdata('priority')!=2) //判斷進入者權限權限
 		{
-			redirect('/index');     //權限不足頁面
+			$this->session->set_flashdata('message', '權限不足');
+			$this->session->set_flashdata('type', 'danger');
+			redirect('/index');     
 		}
 	}
 
