@@ -7,7 +7,7 @@
 </html>
 
 <script type="text/javascript">   
-	<?php if($this->session->flashdata('message')): ?> // 浮筐處理
+	<?php if($this->session->flashdata('message')): ?> // 提醒處理
 	$(function () {
 		$.smkAlert({
 		    text: '<?php echo $this->session->flashdata("message") ?>',

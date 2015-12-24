@@ -13,11 +13,20 @@ class Index extends CI_Controller
 
 	}
 
-	public function index(){
-		$book = $this->book->all();
+	public function index()
+	{
+		$books = $this->book->getByPage(0);
+		$bookCount = count($this->book->all());
 		$this->load->view('layout/header');
 		$this->load->view('layout/navbar');
-		$this->load->view('library/index', compact('book'));
+		$this->load->view('library/index', compact('books','bookCount'));
 		$this->load->view('layout/footer');
+	}
+
+	public function getPage()
+	{
+		$page = $this->input->get('page');
+		$condition = $this->input->get('keyword');
+		echo json_encode($this->book->search(['book.name','book.isbn','book.category','author.name','publisher.name'],urldecode($condition), $page - 1));
 	}
 }

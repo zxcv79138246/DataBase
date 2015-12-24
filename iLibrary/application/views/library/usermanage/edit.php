@@ -62,5 +62,5 @@
 	<script type="text/javascript">
 		$("[name='priority'] > [value='<?php echo $user->priority; ?>']")[0].selected = true;
 	</script>
-	<button type="submit" class="btn btn-primary col-md-offset-10">Updata</button>
+	<button type="submit" class="btn btn-primary col-md-offset-10">Update</button>
 </form>

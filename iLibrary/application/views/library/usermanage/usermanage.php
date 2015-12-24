@@ -60,7 +60,7 @@
 </div><!-- /.modal -->
 
 <script>
-	$(function (){
+	$(function (){       			//顯示edit, create 等視窗及內容
 		$(".edit-btn").click(function(event) {
 			$.ajax({
 				url: $(this).data('url'),

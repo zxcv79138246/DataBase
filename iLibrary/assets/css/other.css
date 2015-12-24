@@ -7,15 +7,22 @@
 	margin-top: -20px;
 }
 
-.book-image{
-	height: 30%;
+img.book-image{
+	height:160px;
+	width: 120px;
 	border-radius: 15px;
 }
 
-.book-style{
+.book-back{
 	background-color:rgba(200, 200, 200, 0.3);
 	border-radius: 10px;
 	width: 100%;
+	padding: 10px;
+}
+
+div.book-name{
+	height: 40px;
+	width: 120px;
 }
 
 #scrollUp {

@@ -54,7 +54,7 @@ class Usermanage extends CI_Controller
 			{
 				if ($users = $this->user->update($userdata,['ssn'=> $ssn]))
 				{
-					$this->session->set_flashdata('message', "{$users[0]->name} 修改成功");
+					$this->session->set_flashdata('message', "{$userdata['name']} 修改成功");
 					$this->session->set_flashdata('type', 'success');
 
 				}
@@ -80,7 +80,6 @@ class Usermanage extends CI_Controller
 			$userdata = $this->input->post();
 			if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']], 1)) 
 			{
-				var_dump(123);
 				if ($users = $this->user->insert($userdata))
 				{
 					$this->session->set_flashdata('message', "新增使用者：{$userdata['name']} 成功");
@@ -119,7 +118,7 @@ class Usermanage extends CI_Controller
 	public function search()
 	{
 		$condition = $this->input->get('search');
-		$users = $this->user->search(['ssn','name'],$condition);
+		$users = $this->user->search(['ssn','name','email'],$condition);
 		if (!$users)
 		{
 			$this->session->set_flashdata('message', "搜尋不到相似資料或內容不存在");

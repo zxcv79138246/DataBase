@@ -24,7 +24,7 @@ class User_model extends CI_Model {
     		return false;
     }
 
-    public function duplicateCheck($data, $is_create = 0)
+    public function duplicateCheck($data, $is_create = 0)             //判斷是否已有值存在
     {
         $this->db->from($this->table);
         foreach ($data as $key => $value) {

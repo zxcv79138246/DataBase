@@ -24,6 +24,30 @@ class Book_model extends CI_Model {
     		return false;
     }
 
+    public function getByPage($page)        //拿取單前頁數所要的書籍資料(6本)
+    {
+    	$query = $this->db->get($this->table, 6, $page * 6);
+    	return $query->result();
+    }
+
+    public function search($fields, $condition, $page)     //搜尋書籍
+    {
+        $this->db->select('*');
+        $this->db->select('author.name as authorName');
+        $this->db->select('publisher.name as publisherName');
+        $this->db->select('book.name as name');
+        $this->db->from($this->table);
+        $this->db->join('author','author.id = book.author_id');
+        $this->db->join('publisher','publisher.id = book.publisher_id');
+        $this->db->join('category','category.id = book.category');
+        foreach ($fields as $field) {
+            $this->db->or_like($field, $condition);
+        }
+        $query = $this->db->get();
+        return ($query->result()) ? ['data' => array_slice($query->result(), $page * 6, 6), 'count' => $query->num_rows()] : false;
+    }
+
+
     public function where($condition)
     {
     	$query = $this->db->get_where($this->table, $condition);
