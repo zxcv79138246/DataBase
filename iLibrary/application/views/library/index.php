@@ -44,13 +44,31 @@
 			<div class="book-back row">
 				<?php foreach ($books as $key => $book): ?>
 					<div class="col-md-2">
-						<a class ="book-href" href=""><img class="img-thumbnail book-image" src="<?php echo $book->cover ?>" alt="<?php echo $book->name ?>"></a>
-						<div class="book-name"><h5 class="text-center"><?php echo $book->name ?></h5></div>
+						<a class ="book-href book-btn" href="#" data-url="<?php echo site_url(['index/bookdata', $book->isbn]) ?>" data-toggle="modal" data-target=".book-modal">
+							<img class="img-thumbnail book-image" src="<?php echo $book->cover ?>" alt="<?php echo $book->name ?>">
+						</a>
+						<div class="book-name text-center"><h5><?php echo $book->name ?></h5></div>
 					</div>
 				<?php endforeach ?>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="modal fade book-modal" tabindex="-1" role="dialog">  <!-- 書本浮筐  -->
+  	<div class="modal-dialog">
+    	<div class="modal-content">
+         	<div class="modal-header">
+           		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      			<h3>書本資料</h3>
+      		</div>
+      		<div class="modal-body" id="modal-body">
+        		<p></p>
+      		</div>
+    	</div><!-- /.modal-content -->
+  	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script type="text/javascript" src="<?php echo asset_url('js/indexBookPage.js') ?>"></script>
 <script> var bookCount = <?php echo $bookCount ?> </script>
+

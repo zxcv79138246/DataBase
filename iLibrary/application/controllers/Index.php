@@ -15,8 +15,8 @@ class Index extends CI_Controller
 
 	public function index()
 	{
-		$books = $this->book->getByPage(0);
-		$bookCount = count($this->book->all());
+		$books = $this->book->search(['book.name','book.isbn','book.category','author.name','publisher.name'],'', 0);		
+		$bookCount =  $this->book->searchCount(['book.name','book.isbn','book.category','author.name','publisher.name'],'', 0);
 		$this->load->view('layout/header');
 		$this->load->view('layout/navbar');
 		$this->load->view('library/index', compact('books','bookCount'));
@@ -27,6 +27,14 @@ class Index extends CI_Controller
 	{
 		$page = $this->input->get('page');
 		$condition = $this->input->get('keyword');
-		echo json_encode($this->book->search(['book.name','book.isbn','book.category','author.name','publisher.name'],urldecode($condition), $page - 1));
+		$books = $this->book->search(['book.name','book.isbn','book.category','author.name','publisher.name'],urldecode($condition), $page-1);
+		$bookCount = $this->book->searchCount(['book.name','book.isbn','book.category','author.name','publisher.name'],urldecode($condition), $page-1);
+		echo json_encode(['data'=>$books,'count'=>$bookCount]);
+	}
+
+	public function bookdata($isbn)
+	{
+		$book = $this->book->find($isbn);
+		$this->load->view('library/book/bookdata',compact('book'));
 	}
 }

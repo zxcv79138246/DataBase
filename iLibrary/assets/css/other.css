@@ -13,6 +13,12 @@ img.book-image{
 	border-radius: 15px;
 }
 
+.bookdata-image{
+	height: 240px;
+	width: 180px;
+	border-radius: 15px;
+}
+
 .book-back{
 	background-color:rgba(200, 200, 200, 0.3);
 	border-radius: 10px;

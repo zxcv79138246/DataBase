@@ -17,14 +17,23 @@ class Book_model extends CI_Model {
 
     public function find($id)
     {
-    	$query = $this->db->get_where($this->table, ['b_id' => $id]);
+    	$this->db->select('*');
+        $this->db->select('author.name as authorName');
+        $this->db->select('publisher.name as publisherName');
+        $this->db->select('book.name as name');
+        $this->db->from($this->table);
+        $this->db->join('author','author.id = book.author_id');
+        $this->db->join('publisher','publisher.id = book.publisher_id');
+        $this->db->join('category','category.id = book.category');   
+        $this->db->where('isbn', $id);   
+        $query = $this->db->get();
     	if ($query->result())
     		return $query->result()[0];
     	else
     		return false;
     }
 
-    public function getByPage($page)        //拿取單前頁數所要的書籍資料(6本)
+    public function getByPage($page)        //拿取當前頁數所要的書籍資料(6本)
     {
     	$query = $this->db->get($this->table, 6, $page * 6);
     	return $query->result();
@@ -40,13 +49,32 @@ class Book_model extends CI_Model {
         $this->db->join('author','author.id = book.author_id');
         $this->db->join('publisher','publisher.id = book.publisher_id');
         $this->db->join('category','category.id = book.category');
+        $this->db->order_by('b_id');
+        $this->db->limit(6,$page * 6);
         foreach ($fields as $field) {
             $this->db->or_like($field, $condition);
         }
         $query = $this->db->get();
-        return ($query->result()) ? ['data' => array_slice($query->result(), $page * 6, 6), 'count' => $query->num_rows()] : false;
+        return ($query->result()) ? $query->result() : false;
     }
 
+    public function searchCount($fields, $condition, $page)
+    {
+        $this->db->select('*');
+        $this->db->select('author.name as authorName');
+        $this->db->select('publisher.name as publisherName');
+        $this->db->select('book.name as name');
+        $this->db->from($this->table);
+        $this->db->join('author','author.id = book.author_id');
+        $this->db->join('publisher','publisher.id = book.publisher_id');
+        $this->db->join('category','category.id = book.category');
+        $this->db->order_by('b_id');
+        foreach ($fields as $field) {
+            $this->db->or_like($field, $condition);
+        }
+        $query = $this->db->get();
+        return ($query->result()) ? $query->num_rows() : false;
+    }
 
     public function where($condition)
     {

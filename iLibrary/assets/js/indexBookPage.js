@@ -7,9 +7,7 @@ var keyword='';
 
 $(function(){
 	var $thisPage = $('.bookPage li');
-		initialize();
-
-	shortName();	//縮短書名加入...
+	initialize();
 
 	$thisPage.click(function(event) 	//點擊書頁目
 	{
@@ -44,30 +42,39 @@ $(function(){
 				bookCount = response.count;
 				keyword = $('.search').val();
 				initialize();
-				moveWindow(1);
 				loadPage(response);
 			}
 		})
 		return false;
 	});
+
+	$(".book-btn").click(function(event) {   //點擊書本
+		$.ajax({
+			url: $(this).attr('data-url'),
+			type: 'get',
+			success:function (response){
+				$('#modal-body').html(response);
+			}
+		})
+	});
 });
 
 function initialize(){
+	page=1;
 	lastPage = Math.ceil(bookCount/6);
 	windowSize = (lastPage < 5) ? lastPage : 5;
+	moveWindow(1);
+	movePage(1,keyword);
 	$('.bookPage li.number').each(function(index, el) {
 		if ($(this).text() > lastPage)
 			$(this).hide();
 		else
 			$(this).show();
 	});
-	page=1;
-	movePage(1,keyword);
-
+	shortName();	//縮短書名 加入...
 }
 
-function movePage
-(page,keyword)		//移動書頁
+function movePage(page,keyword)		//移動書頁
 {
 	$list = $('.bookPage li.number');
 	$list.removeClass('active');
@@ -94,6 +101,17 @@ function loadPage(response)  //ajax 讀取頁面
 	$bookHref = $('.book-href');
 	$bookName = $('.book-name');
 	response = response.data;
+	$bookHref.each(function(index, el) {
+		if (response[index]==null)
+		{
+			$(this).hide();
+		}else{
+			$(this).show();
+			$(this).attr('data-url', "http://se-rms.ddns.net/iLibrary/index.php/index/bookdata/" + response[index].isbn);
+		}
+	});
+
+
 	$bookImage.each(function(index, el) {
 		if (response[index]==null)
 		{
@@ -104,6 +122,7 @@ function loadPage(response)  //ajax 讀取頁面
 			this.alt = response[index].name;
 		}
 	});
+
 	$bookName.each(function(index, el) {
 		if (response[index]==null)
 		{
@@ -141,6 +160,7 @@ function moveWindow(page)	//移動 頁目表
 function shortName()	//縮短書名加入...
 {
 	$('.book-name').each(function(index, el) {
+		$(this).attr("title",'');
 		if ($(this).text().length > nameLength)
 		{
 			$(this).attr("title",$(this).text());
