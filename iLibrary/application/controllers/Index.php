@@ -10,7 +10,9 @@ class Index extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('book_model', 'book');
-
+		$this->load->model('copy_book_model', 'copy');
+		$this->load->model('reserve_model', 'reserve');
+		$this->load->model('borrow_return_model','borrow_return');
 	}
 
 	public function index()
@@ -35,6 +37,9 @@ class Index extends CI_Controller
 	public function bookdata($isbn)
 	{
 		$book = $this->book->find($isbn);
-		$this->load->view('library/book/bookdata',compact('book'));
+		$copyNum = $this->copy->copyNum($isbn);
+		$reserveNum = $this->reserve->hasReserveNum($isbn);
+		$hasBorrowNum = $this->borrow_return->hasBorrowNum($isbn); 
+		$this->load->view('library/book/bookdata',compact('book','copyNum','reserveNum','hasBorrowNum'));
 	}
 }

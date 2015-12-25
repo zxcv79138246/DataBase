@@ -6,7 +6,7 @@
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 col-md-offset-9">
 			<form class="form" role="search" id="search-form">
 				<div class="input-group">
 					<input type="text" class="form-control search" placeholder="Search">
@@ -16,7 +16,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-md-10 col-md-offset-2">
+		<div class="col-md-12">
 			<nav class="text-center">
 			  <ul class="pagination bookPage">
 			    <li data-type="-1">
@@ -36,12 +36,9 @@
 			    </li>
 			  </ul>
 			</nav>
-			<table class="table">
-				<tr>
-					<th>Book List</th>
-				</tr>
-			</table>
-			<div class="book-back row">
+			<h3 class="page-header">Book List</h3>
+			<div class="book-back">
+				<div class="row">
 				<?php foreach ($books as $key => $book): ?>
 					<div class="col-md-2">
 						<a class ="book-href book-btn" href="#" data-url="<?php echo site_url(['index/bookdata', $book->isbn]) ?>" data-toggle="modal" data-target=".book-modal">
@@ -50,6 +47,7 @@
 						<div class="book-name text-center"><h5><?php echo $book->name ?></h5></div>
 					</div>
 				<?php endforeach ?>
+				</div>
 			</div>
 		</div>
 	</div>

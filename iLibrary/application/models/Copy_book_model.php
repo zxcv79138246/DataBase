@@ -24,6 +24,12 @@ class Copy_book_model extends CI_Model {
     		return false;
     }
 
+    public function copyNum($isbn)
+    {
+        $query = $this->db->query("SELECT count(`c_id`) as `copyNum` FROM {$this->table} WHERE `isbn` = '{$isbn}'");
+        return $query->result();
+    }
+
     public function where($condition)
     {
     	$query = $this->db->get_where($this->table, $condition);

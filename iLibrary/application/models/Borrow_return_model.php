@@ -24,6 +24,19 @@ class Borrow_return_model extends CI_Model {
     		return false;
     }
 
+    public function hasBorrowNum($isbn)
+    {
+        $this->db->select('count(id) as hasBorrowNum');
+        $this->db->from($this->table);
+        $this->db->join('copy_book','copy_book.c_id = borrow_return.c_id');
+        $this->db->join('book','copy_book.isbn = book.isbn');
+        $this->db->where('book.isbn',$isbn);
+        $this->db->where('return_date is NULL',null,false);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
     public function where($condition)
     {
     	$query = $this->db->get_where($this->table, $condition);
@@ -54,7 +67,7 @@ class Borrow_return_model extends CI_Model {
 
     public function copy_book($id)
     {
-        $query = $this->db->query("SELECT `copy_book` FROM {$table} WHERE `c_id` = '{$id}'");
+        $query = $this->db->query("SELECT `copy_book` FROM {$this->table} WHERE `c_id` = '{$id}'");
     	//$query = $this->db->get_where('copy_book', ['c_id' => $id);
     	return $query->result();
     }

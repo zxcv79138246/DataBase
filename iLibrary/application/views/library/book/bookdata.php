@@ -39,13 +39,13 @@
 	<div class="row">
 		<div class ="col-md-12">
 			<div class="col-md-4">
-				<label class="">書本數： <?php echo 0; ?> </label>
+				<label class="">書本數： <?php echo $copyNum[0]->copyNum; ?> </label>
 			</div>
 			<div class="col-md-4">
-				<label class="">被預約數：  <?php echo 0; ?> </label>
+				<label class="">被預約數：  <?php echo $reserveNum[0]->reserveNum; ?> </label>
 			</div>
 			<div class="col-md-4">
-				<label class="">被借閱數：  <?php echo 0; ?> </label>
+				<label class="">被借閱數：  <?php echo $hasBorrowNum[0]->hasBorrowNum; ?> </label>
 			</div>
 		</div>
 	</div>
