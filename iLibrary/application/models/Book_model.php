@@ -11,8 +11,21 @@ class Book_model extends CI_Model {
 
     public function all()
     {
-    	$query = $this->db->get($this->table);
-    	return $query->result();
+    	$this->db->select('*');
+        $this->db->select('author.name as authorName');
+        $this->db->select('publisher.name as publisherName');
+        $this->db->select('book.name as name');
+        $this->db->select('category.id as categoryId');
+        $this->db->from($this->table);
+        $this->db->join('author','author.id = book.author_id');
+        $this->db->join('publisher','publisher.id = book.publisher_id');
+        $this->db->join('category','category.id = book.category');
+        $this->db->order_by('b_id');
+        foreach ($fields as $field) {
+            $this->db->or_like($field, $condition);
+        }
+        $query = $this->db->get();
+        return ($query->result()) ? $query->result() : false;
     }
 
     public function find($id)
@@ -45,6 +58,7 @@ class Book_model extends CI_Model {
         $this->db->select('author.name as authorName');
         $this->db->select('publisher.name as publisherName');
         $this->db->select('book.name as name');
+        $this->db->select('category.id as categoryId');
         $this->db->from($this->table);
         $this->db->join('author','author.id = book.author_id');
         $this->db->join('publisher','publisher.id = book.publisher_id');
