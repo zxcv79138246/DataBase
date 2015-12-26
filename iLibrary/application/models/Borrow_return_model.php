@@ -36,6 +36,18 @@ class Borrow_return_model extends CI_Model {
         return $query->result();
     }
 
+    public function hasborrow($isbn)
+    {
+        $this->db->select('ssn');
+        $this->db->from($this->table);
+        $this->db->join('copy_book','copy_book.c_id = borrow_return.c_id');
+        $this->db->join('book','copy_book.isbn = book.isbn');
+        $this->db->where('book.isbn',$isbn);
+        $this->db->where('return_date is NULL',null,false);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
     public function where($condition)
     {

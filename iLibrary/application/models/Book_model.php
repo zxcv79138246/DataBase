@@ -116,12 +116,6 @@ class Book_model extends CI_Model {
         return $query->result();
     }
     
-    public function copy_book($isbn)
-    {
-        $query = $this->db->get_where('copy_book', ['isbn' => $isbn]);
-        return $query->result();
-    }
-
     public function rate($isab)
     {
         $query = $this->db->get_where('rate', ['isbn' => $isbn]);

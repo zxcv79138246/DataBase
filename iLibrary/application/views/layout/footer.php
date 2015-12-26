@@ -20,7 +20,7 @@
 	$(function(){			//scrollup
   		$.scrollUp({
   			scrollText: '^',
-  			scrollDistance: 100,
+  			scrollDistance: 200,
   			scrollSpeed: 300,  
   		});
 
