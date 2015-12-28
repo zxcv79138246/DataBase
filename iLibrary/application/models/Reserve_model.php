@@ -67,10 +67,13 @@ class Reserve_model extends CI_Model {
 
     public function reserveCount($ssn)
     {
-        //$this->db->query("SELECT 'count(`id`)' FROM {$this->table} WHERE `ssn` = '{$ssn}'");
+        //$query=$this->db->query("SELECT 'count(`id`)' FROM {$this->table} WHERE `ssn` = '{$ssn}'");
         $this->db->select('count(id)');
         $this->db->from($this->table);
-        $$this->db->where('ssn',$ssn);
+        $this->db->where('ssn',$ssn);
+        $query = $this->db->get();
+        return $query->result();
+
     }
 
     public function where($condition)

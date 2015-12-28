@@ -20,7 +20,7 @@ class Book_model extends CI_Model {
         $this->db->join('author','author.id = book.author_id');
         $this->db->join('publisher','publisher.id = book.publisher_id');
         $this->db->join('category','category.id = book.category');
-        
+        $this->db->order_by('b_id');
         $query = $this->db->get();
         return ($query->result()) ? $query->result() : false;
     }
