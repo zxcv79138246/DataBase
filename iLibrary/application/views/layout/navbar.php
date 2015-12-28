@@ -14,11 +14,10 @@
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="nav navbar-nav">
 				<li <?php if ($this->uri->segment(1, 0) == 'index') echo 'class="active"' ?>><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
-				<li><a>預約追蹤</a></li>
-				<li><a>借書紀錄</a></li>
+				<li <?php if ($this->uri->segment(1) == 'borrow' && $this->uri->segment(2) == 'reserveRecord') echo 'class="active"' ?>><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>				<li><a>借書紀錄</a></li>
 				<li <?php if ($this->uri->segment(1) == 'usermanage') echo 'class="active"' ?>><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
 				<li <?php if ($this->uri->segment(1) == 'bookmanage') echo 'class="active"' ?>><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
-				<li <?php if ($this->uri->segment(1) == 'borrow') echo 'class="active"' ?>><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
+				<li <?php if (($this->uri->segment(1) == 'borrow' || $this->uri->segment(1) == 'returnbook') && $this->uri->segment(2) == NULL) echo 'class="active"' ?>><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ($this->session->ssn): ?>

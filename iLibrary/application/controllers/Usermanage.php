@@ -36,7 +36,6 @@ class Usermanage extends CI_Controller
 
 		}
 		redirect('/usermanage');
-
 	}
 
 	public function edit($ssn)
@@ -132,6 +131,5 @@ class Usermanage extends CI_Controller
 			$this->load->view('library/usermanage/usermanage', compact('users'));
 			$this->load->view('layout/footer');
 		}
-		
 	}
 }

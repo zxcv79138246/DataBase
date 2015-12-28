@@ -48,17 +48,54 @@ class Borrow_return_model extends CI_Model {
         return $query->result();
     }
 
+    public function search($fields, $condition)
+    {
+        $this->db->select('*');
+        $this->db->select('book.name as bookName');
+        $this->db->select('user.name as userName');
+        $this->db->from($this->table);
+        $this->db->join('copy_book','copy_book.c_id = borrow_return.c_id');
+        $this->db->join('user','user.ssn = borrow_return.ssn');
+        $this->db->join('book','copy_book.isbn = book.isbn');
+        foreach ($fields as $key => $field) {
+            $this->db->or_where($field,$condition);
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function returnSearch($fields, $condition)
+    {
+        $this->db->select('*');
+        $this->db->select('book.name as bookName');
+        $this->db->select('user.name as userName');
+        $this->db->from($this->table);
+        $this->db->join('copy_book','copy_book.c_id = borrow_return.c_id');
+        $this->db->join('user','user.ssn = borrow_return.ssn');
+        $this->db->join('book','copy_book.isbn = book.isbn');
+        foreach ($fields as $key => $field) {
+            $this->db->or_where($field,$condition);
+        }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function returnBook($c_id,$ssn)
+    {
+        $query=$this->db->query(" UPDATE `borrow_return` SET `return_date` = now() WHERE `c_id`= '{$c_id}' AND `ssn` = '{$ssn}'");
+        return $query;
+    }
+
+    public function insert($c_id,$ssn)
+    {
+        $result = $this->db->insert($this->table,['c_id' => $c_id, 'ssn' => $ssn]);
+        return $result;
+    }
 
     public function where($condition)
     {
     	$query = $this->db->get_where($this->table, $condition);
     	return $query->result();
-    }
-
-    public function insert($borrow_return)
-    {
-    	$result = $this->db->insert($this->table, $borrow_return);
-    	return $result;
     }
 
     public function update($borrow_return, $condition)
