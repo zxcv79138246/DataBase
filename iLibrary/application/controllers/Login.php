@@ -30,7 +30,11 @@ class Login extends CI_Controller
 			$this->session->set_flashdata('message','登入失敗,帳號或密碼錯誤');
 			$this->session->set_flashdata('type', 'danger');
 		}
-		redirect('/index');
+		if ($login->priority ==2)
+			redirect('usermanage');
+		else
+			redirect('/index');
+		
 	}
 
 	public function logout()

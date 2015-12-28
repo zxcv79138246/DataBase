@@ -13,12 +13,12 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="nav navbar-nav subsystem">
-				<li ><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
-				<li ><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>
-				<li ><a href="<?php echo site_url('/returnbook/borrowRecord') ?>">借書紀錄</a></li>
-				<li ><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
-				<li ><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
-				<li ><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
+				<li style="<?php echo ($this->session->userdata('priority')<2)? : 'display:none'  ?>"><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
+				<li style="<?php echo ($this->session->userdata('priority')<2 && ($this->session->userdata('priority') != null))? : 'display:none'  ?>"><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>
+				<li style="<?php echo ($this->session->userdata('priority')<2 && ($this->session->userdata('priority') != null))? : 'display:none'  ?>"><a href="<?php echo site_url('/returnbook/borrowRecord') ?>">借書紀錄</a></li>
+				<li style="<?php echo ($this->session->userdata('priority')!=2)? 'display:none' : '' ?>"><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
+				<li style="<?php echo ($this->session->userdata('priority')!=1)? 'display:none' : '' ?>"><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
+				<li style="<?php echo ($this->session->userdata('priority')!=1)? 'display:none' : '' ?>"><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ($this->session->ssn): ?>
