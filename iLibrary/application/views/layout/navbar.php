@@ -27,6 +27,7 @@
           					<?php echo $this->session->userdata('name') ?> <span class="caret"></span>
           				</a>
           				<ul class="dropdown-menu">
+          					<li><a href="#" data-toggle="modal" data-target=".change-modal">變更密碼</a></li>
             				<li><a href="<?php echo site_url('login/logout') ?>">logout</a></li>
           				</ul>
         			</li>
@@ -38,6 +39,7 @@
 	</div><!-- /.container-fluid -->
 </nav>
 
+<!-- 登入 -->
 <div class="modal login-modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">
 	    <div class="modal-content">
@@ -63,6 +65,38 @@
     	</div><!-- /.modal-content -->
   	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- 改password -->
+<div class="modal change-modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+		    <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="model-title">Change Password</h4>
+		    </div>
+		    <form action="<?php echo site_url('login/changePS') ?>" method="POST">
+      			<div class="modal-body" id="modal-login-body">
+        			<div class="input-group form-group">
+		            	<span class="input-group-addon">原密碼</span>
+		            	<input type="password" class="form-control" name = 'password'>
+		        	</div>
+		        	<div class="input-group form-group">
+		            	<span class="input-group-addon" name = 'password'>修改後密碼</span>
+		            	<input type="password" class="form-control"  name = 'newpassword'>
+		        	</div>
+		        	<div class="input-group form-group">
+		            	<span class="input-group-addon" name = 'password'>再輸入一次</span>
+		            	<input type="password" class="form-control"  name = 'onemore'>
+		        	</div>
+      			</div>
+      			<div class="modal-footer">
+		        	<button type="submit" class="btn btn-primary">修改</button>
+		    	</div>
+		    </form>
+    	</div><!-- /.modal-content -->
+  	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script>
 	var route = ['/iLibrary/index.php/index','/iLibrary/index.php/borrow/reserveRecord','/iLibrary/index.php/returnbook/borrowRecord','/iLibrary/index.php/usermanage','/iLibrary/index.php/bookmanage','/iLibrary/index.php/borrow','/iLibrary/index.php/usermanage'];
 	var lacation = window.location.pathname;
