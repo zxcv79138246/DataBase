@@ -20,7 +20,7 @@ class Bookmanage extends CI_Controller
 
 	public function index()
 	{
-		$books = $this->book->search(['book.name','book.isbn','book.category','author.name','publisher.name'],'', 0);
+		$books = $this->book->all();
 		$this->load->view('layout/header');
 		$this->load->view('layout/navbar');
 		$this->load->view('library/bookmanage/bookmanage', compact('books'));
