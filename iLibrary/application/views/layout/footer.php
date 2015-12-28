@@ -21,7 +21,7 @@
   		$.scrollUp({
   			scrollText: '^',
   			scrollDistance: 200,
-  			scrollSpeed: 300,  
+  			scrollSpeed: 400,  
   		});
 
 	});

@@ -28,22 +28,39 @@ class Returnbook extends CI_Controller
 		$this->load->view('layout/footer');
 	}
 
-	public function search()
+	public function search($isRecord = 0)
 	{
 		$condition = $this->input->get('search');
-		$borrows = $this->borrow->returnSearch(['user.ssn','user.name','book.isbn','book.name','borrow_return.c_id'],$condition);
-		if (!$borrows)
+		if ($isRecord== 0)
 		{
-			$this->session->set_flashdata('message', "搜尋不到借書記錄");
-			$this->session->set_flashdata('type', 'danger');
-
-			redirect('/returnbook');
+			$borrows = $this->borrow->returnSearch(['user.ssn','user.name','book.isbn','book.name','borrow_return.c_id','borrow_return.loan_date'],$condition);
+			if (!$borrows)
+			{
+				$this->session->set_flashdata('message', "搜尋不到借書記錄");
+				$this->session->set_flashdata('type', 'danger');
+				redirect('/returnbook');
+			}else
+			{
+				$this->load->view('layout/header');
+				$this->load->view('layout/navbar');			
+				$this->load->view('library/borrow/returnbook', compact('borrows','condition'));
+				$this->load->view('layout/footer');
+			}
 		}else
 		{
-			$this->load->view('layout/header');
-			$this->load->view('layout/navbar');			
-			$this->load->view('library/borrow/returnbook', compact('borrows','condition'));
-			$this->load->view('layout/footer');
+			$borrows = $this->borrow->search(['user.ssn','user.name','book.isbn','book.name','borrow_return.c_id','borrow_return.loan_date'],$condition);
+			if (!$borrows)
+			{
+				$this->session->set_flashdata('message', "搜尋不到相關借書記錄");
+				$this->session->set_flashdata('type', 'danger');
+				$this->borrowRecord();
+			}else
+			{
+				$this->load->view('layout/header');
+				$this->load->view('layout/navbar');			
+				$this->load->view('library/borrow/borrowrecord', compact('borrows','condition'));
+				$this->load->view('layout/footer');
+			}	
 		}
 	}
 
@@ -58,4 +75,15 @@ class Returnbook extends CI_Controller
 		}
 		
 	}
+
+	public function borrowRecord()
+	{
+		$condition='';
+		$borrows = $this->borrow->search(['user.ssn'],$this->session->userdata('ssn'));
+		$this->load->view('layout/header');
+		$this->load->view('layout/navbar');			
+		$this->load->view('library/borrow/borrowrecord', compact('borrows','condition'));
+		$this->load->view('layout/footer');
+	}
+
 }

@@ -52,18 +52,6 @@ $(function() {
                 var isbn = $(response).find('#isbn').text();
                 // binding reservebook event on reserve-btn
                 $('.reserve-btn').on('click', function() {
-                    // 預約
-                    // console.log(isbn);
-
-                    // response = {
-                    // 	status: 'danger',
-                    // 	message: '預約失敗！！'
-                    // }
-                    // $.smkAlert({
-                    //     text: response.message,
-                    //     type: response.status,
-                    //     position: 'top-center'
-                    // });
                     $.ajax({
                             url: '/iLibrary/index.php/reserve/reserveBook/' + isbn,
                             type: 'POST',
@@ -84,6 +72,24 @@ $(function() {
             }
         })
     });
+
+	$(".category_link").click(function(event) {			//點擊category
+		var category = $(this).text()
+		$.ajax({
+            url: '/iLibrary/index.php/index/getPage/',
+            dataType: 'JSON',
+            data: {
+                keyword: category,
+                page: 1
+            },
+            success: function(response) {
+                bookCount = response.count;
+                keyword = category;
+                initialize();
+                loadPage(response);
+            }
+        })
+	});
 });
 
 function initialize() {

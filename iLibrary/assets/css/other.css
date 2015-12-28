@@ -26,7 +26,36 @@ img.book-image{
 	padding: 10px;
 }
 
+.bookdata{
+	width: 10%;
+}
+
+.bookdata-name{
+	width: 25%;
+}
+
 div.book-name{
 	height: 40px;
 	width: 120px;
+}
+
+.edit-bookimg{
+	height:240px;
+	width: 180px;
+	border-radius: 15px;	
+}
+
+.category_link{
+	display: inline;
+	margin-right: 10px;
+}
+
+
+#scrollUp {
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: #555;
+  color: #fff;
+  border-radius: 18px;
 }

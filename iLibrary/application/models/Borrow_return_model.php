@@ -58,7 +58,7 @@ class Borrow_return_model extends CI_Model {
         $this->db->join('user','user.ssn = borrow_return.ssn');
         $this->db->join('book','copy_book.isbn = book.isbn');
         foreach ($fields as $key => $field) {
-            $this->db->or_where($field,$condition);
+            $this->db->or_like($field,$condition);
         }
         $query = $this->db->get();
         return $query->result();
@@ -76,6 +76,16 @@ class Borrow_return_model extends CI_Model {
         foreach ($fields as $key => $field) {
             $this->db->or_where($field,$condition);
         }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function borrowCount($ssn)
+    {
+        $this->db->select('count(id)');
+        $this->db->from($this->table);
+        $thie->db->where('ssn',$ssn);
+        $this->db->where('return_date',NULL);
         $query = $this->db->get();
         return $query->result();
     }

@@ -71,8 +71,17 @@ class Borrow extends CI_Controller
 
 	public function borrowbook($c_id,$ssn)
 	{
-		$this->borrow->insert($c_id,$ssn);
-		$this->destory($c_id,1);
+		$borrowCount = $this->borrow->borrowCount($ssn);
+		if ($borrowCount<10)
+		{
+			$this->borrow->insert($c_id,$ssn);
+			$this->destory($c_id,1);
+		}else
+		{
+			$this->session->set_flashdata('message', "已借10本書,請歸還書籍後才能再借其他書");
+			$this->session->set_flashdata('type', 'danger');
+			redirect('/borrow');
+		}
 	}
 
 	public function reserveRecord()

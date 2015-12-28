@@ -17,25 +17,37 @@
 			</form>
 		</div>
 		<div class="col-md-12">
-			<nav class="text-center">
-			  <ul class="pagination bookPage">
-			    <li data-type="-1">
-			      <a aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li class=" active number"><a>1</a></li>
-			    <li class="number"><a>2</a></li>
-			    <li class="number"><a>3</a></li>
-			    <li class="number"><a>4</a></li>
-			    <li class="number"><a>5</a></li>
-			    <li data-type="+1">
-			      <a aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>
+			<div class="row">
+				<div class = "col-md-12">
+					<ul>
+						<?php foreach ($categorys as $key => $category): ?>
+							<li class="category_link"><button type="botton" class="btn btn-default"><?php echo $category->category ?></button></li>
+						<?php endforeach ?>
+					</ul>
+				</div>
+			</div>
+
+			<div class ="row">
+				<nav class="text-center">
+				  <ul class="pagination bookPage">
+				    <li data-type="-1">
+				      <a aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <li class=" active number"><a>1</a></li>
+				    <li class="number"><a>2</a></li>
+				    <li class="number"><a>3</a></li>
+				    <li class="number"><a>4</a></li>
+				    <li class="number"><a>5</a></li>
+				    <li data-type="+1">
+				      <a aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			<div>
 			<h3 class="page-header">Book List</h3>
 			<div class="book-back">
 				<div class="row">

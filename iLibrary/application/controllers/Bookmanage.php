@@ -10,6 +10,9 @@ class Bookmanage extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('book_model', 'book');
+		$this->load->model('author_model','author');
+		$this->load->model('category_model','category');
+		$this->load->model('publisher_model','publisher');
 		if ($this->session->userdata('priority')!=2) //判斷進入者權限權限
 		{
 			$this->session->set_flashdata('message', '權限不足');
@@ -27,11 +30,11 @@ class Bookmanage extends CI_Controller
 		$this->load->view('layout/footer');
 	}
 
-	public function destory($ssn)
+	public function destory($isbn)
 	{
-		if ($books = $this->book->destory(['ssn' => $ssn]))
+		if ($book = $this->book->destory(['isbn' => $isbn]))
 		{
-			$this->session->set_flashdata('message', "{$books[0]->name} 已被刪除");
+			$this->session->set_flashdata('message', "ISBN： {$book[0]->isbn} 書名：{$book[0]->name} 已被刪除");
 			$this->session->set_flashdata('type', 'warning');
 
 		}
@@ -39,27 +42,31 @@ class Bookmanage extends CI_Controller
 
 	}
 
-	public function edit($ssn)
+	public function edit($isbn)
 	{
-		$book = $this->book->find($ssn);
-		$this->load->view('library/bookmanage/edit',compact('book'));
+		$authors = $this->author->all();
+		$categorys = $this->category->all();
+		$publishers = $this->publisher->all();
+		$book = $this->book->findBookEdit($isbn);
+		$this->load->view('library/bookmanage/edit',compact('book','authors','categorys','publishers'));
 	}
 
-	public function update ($ssn)
+	public function update ($isbn)
 	{
 		if ($this->verification())
 		{
-			$userdata = $this->input->post();     //抓取頁面所有post
-			if (!$this->book->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']])) 
+			$bookdata = $this->input->post();     //抓取頁面所有post
+			if (!$this->book->duplicateCheck(['isbn' => $bookdata['isbn']])) 
 			{
-				if ($books = $this->book->update($userdata,['ssn'=> $ssn]))
+				$books = $this->book->update($bookdata,['isbn'=> $isbn]);
+				if ($books)
 				{
-					$this->session->set_flashdata('message', "{$userdata['name']} 修改成功");
+					$this->session->set_flashdata('message', "ISBN：{$bookdata['isbn']} 書名：{$bookdata['name']} 修改成功");
 					$this->session->set_flashdata('type', 'success');
 
 				}
 			} else {
-				$this->session->set_flashdata('message', "SSN,Email重複");
+				$this->session->set_flashdata('message', "ISBN 重複");
 				$this->session->set_flashdata('type', 'danger');
 
 			}
@@ -70,24 +77,109 @@ class Bookmanage extends CI_Controller
 
 	public function create()
 	{
-		$this->load->view('library/bookmanage/create');
+		$authors = $this->author->all();
+		$categorys = $this->category->all();
+		$publishers = $this->publisher->all();
+		$this->load->view('library/bookmanage/create',compact('authors','categorys','publishers'));
+	}
+
+	public function createdata()
+	{
+		$this->load->view('library/bookmanage/createdata');
+	}
+
+	public function storeOtherData()
+	{
+		$category=$this->input->post('category');
+		$author=$this->input->post('author');
+		$publisher=$this->input->post('publisher');
+		$publisherAddress=$this->input->post('publisherAddress');
+		$new=0;
+		if ($category!=NULL)
+		{
+			$new=1;
+			if (!$this->category->duplicateCheck(['category'=>$category],1))
+			{
+				$categoryResult = $this->category->insert(['category'=>$category]);
+				if ($categoryResult)
+				{
+					$this->session->set_flashdata('message', "分類：{$category} 新增成功");
+					$this->session->set_flashdata('type', 'success');
+				}
+			}else
+			{
+				$this->session->set_flashdata('message', "已有 {$category} 分類");
+				$this->session->set_flashdata('type', 'danger');
+			}
+		}
+
+		if ($author!=NULL)
+		{
+			$new=1;
+			if (!$this->author->duplicateCheck(['name'=>$author],1))
+			{
+				$authorResult = $this->author->insert(['name'=>$author]);
+				if ($authorResult)
+				{
+					$this->session->set_flashdata('message', "分類：{$author} 新增成功");
+					$this->session->set_flashdata('type', 'success');
+				}
+			}else
+			{
+				$this->session->set_flashdata('message', "已有 {$author} 分類");
+				$this->session->set_flashdata('type', 'danger');
+			}
+		}
+
+		if ($publisher!=NULL && $publisherAddress!=Null)
+		{
+			$new=1;
+			if (!$this->publisher->duplicateCheck(['name'=>$publisher],1))
+			{
+				$publisherResult = $this->publisher->insert(['name'=>$publisher,'address'=>$publisherAddress]);
+				if ($publisherResult)
+				{
+					$this->session->set_flashdata('message', "分類：{$publisher} 新增成功");
+					$this->session->set_flashdata('type', 'success');
+				}
+			}else
+			{
+				$this->session->set_flashdata('message', "已有 {$publisher} 分類");
+				$this->session->set_flashdata('type', 'danger');
+			}
+		}else if (($publisher!=NULL && $publisherAddress==Null) || ($publisher==NULL && $publisherAddress!=Null) )
+		{
+			$new=1;
+			$this->session->set_flashdata('message', "出版社資料不齊全");
+			$this->session->set_flashdata('type', 'danger');
+		}
+
+		if ($new==0)
+		{
+			$this->session->set_flashdata('message', "未輸入任何資料");
+			$this->session->set_flashdata('type', 'danger');
+		}
+
+		redirect('/bookmanage');
+
 	}
 
 	public function store()
 	{
 		if ($this->verification())
 		{
-			$userdata = $this->input->post();
-			if (!$this->book->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']], 1)) 
+			$newbookdata = $this->input->post();
+			if (!$this->book->duplicateCheck(['isbn' => $newbookdata['isbn']], 1)) 
 			{
-				if ($books = $this->book->insert($userdata))
+				$book = $this->book->insert($newbookdata);
+				if ($book)
 				{
-					$this->session->set_flashdata('message', "新增使用者：{$userdata['name']} 成功");
+					$this->session->set_flashdata('message', "新增書本 ISBN：{$newbookdata['isbn']} 書名：{$newbookdata['name']} 成功");
 					$this->session->set_flashdata('type', 'success');
 
 				}
 			} else {
-				$this->session->set_flashdata('message', "SSN,Email重複");
+				$this->session->set_flashdata('message', "ISBN重複");
 				$this->session->set_flashdata('type', 'danger');
 
 			}
@@ -97,14 +189,13 @@ class Bookmanage extends CI_Controller
 
 	public function verification()
 	{
-		$this->form_validation->set_rules('ssn','SSN','required');
-		$this->form_validation->set_rules('sex','Sex','required');
-		$this->form_validation->set_rules('name','Name','required');
-		$this->form_validation->set_rules('address','Address','required');
-		$this->form_validation->set_rules('phone','Phone','required');
-		$this->form_validation->set_rules('email','Email','required');
-		$this->form_validation->set_rules('password','Password','required');
-		$this->form_validation->set_rules('priority','Priority','required');
+		$this->form_validation->set_rules('isbn','ISBN','required');
+		$this->form_validation->set_rules('name','BookName','required');
+		$this->form_validation->set_rules('category','Category','required');
+		$this->form_validation->set_rules('author_id','Author','required');
+		$this->form_validation->set_rules('publisher_id','Publisher','required');
+		$this->form_validation->set_rules('publish_date','Publish_date','required');
+		$this->form_validation->set_rules('cover','Cover','required');
 
 		if (!$this->form_validation->run())
 		{
@@ -118,7 +209,7 @@ class Bookmanage extends CI_Controller
 	public function search()
 	{
 		$condition = $this->input->get('search');
-		$books = $this->book->search(['ssn','name','email'],$condition);
+		$books = $this->book->searchEdit(['book.isbn','book.name','author.name','publisher.name','category.category','book.publish_date'],$condition);
 		if (!$books)
 		{
 			$this->session->set_flashdata('message', "搜尋不到相似資料或內容不存在");
@@ -129,7 +220,7 @@ class Bookmanage extends CI_Controller
 		{
 			$this->load->view('layout/header');
 			$this->load->view('layout/navbar');			
-			$this->load->view('library/bookmanage/bookmanage', compact('users'));
+			$this->load->view('library/bookmanage/bookmanage', compact('books'));
 			$this->load->view('layout/footer');
 		}
 		

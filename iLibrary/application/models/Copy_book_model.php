@@ -18,7 +18,7 @@ class Copy_book_model extends CI_Model {
     public function find($isbn)  //尋找同isbn之copy_book 
     {
     	$query = $this->db->get_where($this->table,['isbn' => $isbn]);
-        return $query->result();
+        return $query->result()[0];
     }
 
     public function copyNum($isbn)

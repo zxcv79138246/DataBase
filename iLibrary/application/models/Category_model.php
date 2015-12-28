@@ -52,9 +52,14 @@ class Category_model extends CI_Model {
     		return $result;
     }
 
-    public function book($id)
+    public function duplicateCheck($data, $is_create = 0)             //判斷是否已有值存在
     {
-    	$query = $this->db->get_where('book', ['category' => $id]);
-    	return $query->result();
+        $this->db->from($this->table);
+        foreach ($data as $key => $value) {
+            $this->db->or_where($key, $value);
+        }
+        $query = $this->db->get();
+        return ($query->num_rows() + $is_create) > 1;
     }
+    
 }

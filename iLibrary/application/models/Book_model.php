@@ -25,6 +25,15 @@ class Book_model extends CI_Model {
         return ($query->result()) ? $query->result() : false;
     }
 
+    public function findBookEdit($isbn)
+    {
+        $query = $this->db->get_where($this->table,['isbn' => $isbn]);
+        if ($query->result())
+            return $query->result()[0];
+        else
+            return false;
+    }
+
     public function find($id)
     {
     	$this->db->select('*');
@@ -56,6 +65,7 @@ class Book_model extends CI_Model {
         $this->db->select('publisher.name as publisherName');
         $this->db->select('book.name as name');
         $this->db->select('category.id as categoryId');
+        $this->db->select('book.category as bookCategoryId');
         $this->db->from($this->table);
         $this->db->join('author','author.id = book.author_id');
         $this->db->join('publisher','publisher.id = book.publisher_id');
@@ -85,6 +95,35 @@ class Book_model extends CI_Model {
         }
         $query = $this->db->get();
         return ($query->result()) ? $query->num_rows() : false;
+    }
+
+    public function duplicateCheck($data, $is_create = 0)             //判斷是否已有值存在
+    {
+        $this->db->from($this->table);
+        foreach ($data as $key => $value) {
+            $this->db->or_where($key, $value);
+        }
+        $query = $this->db->get();
+        return ($query->num_rows() + $is_create) > 1;
+    }
+
+    public function searchEdit($fields, $condition)
+    {
+        $this->db->select('*');
+        $this->db->select('author.name as authorName');
+        $this->db->select('publisher.name as publisherName');
+        $this->db->select('book.name as name');
+        $this->db->select('category.id as categoryId');
+        $this->db->from($this->table);
+        $this->db->join('author','author.id = book.author_id');
+        $this->db->join('publisher','publisher.id = book.publisher_id');
+        $this->db->join('category','category.id = book.category');
+        $this->db->order_by('b_id');
+        foreach ($fields as $field) {
+            $this->db->or_like($field, $condition);
+        }
+        $query = $this->db->get();
+        return ($query->result()) ? $query->result() : false;
     }
 
     public function where($condition)

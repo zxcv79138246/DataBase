@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-static-top">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -12,12 +12,13 @@
 			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar">
-			<ul class="nav navbar-nav">
-				<li <?php if ($this->uri->segment(1, 0) == 'index') echo 'class="active"' ?>><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
-				<li <?php if ($this->uri->segment(1) == 'borrow' && $this->uri->segment(2) == 'reserveRecord') echo 'class="active"' ?>><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>				<li><a>借書紀錄</a></li>
-				<li <?php if ($this->uri->segment(1) == 'usermanage') echo 'class="active"' ?>><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
-				<li <?php if ($this->uri->segment(1) == 'bookmanage') echo 'class="active"' ?>><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
-				<li <?php if (($this->uri->segment(1) == 'borrow' || $this->uri->segment(1) == 'returnbook') && $this->uri->segment(2) == NULL) echo 'class="active"' ?>><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
+			<ul class="nav navbar-nav subsystem">
+				<li ><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
+				<li ><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>
+				<li ><a href="<?php echo site_url('/returnbook/borrowRecord') ?>">借書紀錄</a></li>
+				<li ><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
+				<li ><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
+				<li ><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ($this->session->ssn): ?>
@@ -62,3 +63,20 @@
     	</div><!-- /.modal-content -->
   	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+	var route = ['/iLibrary/index.php/index','/iLibrary/index.php/borrow/reserveRecord','/iLibrary/index.php/returnbook/borrowRecord','/iLibrary/index.php/usermanage','/iLibrary/index.php/bookmanage','/iLibrary/index.php/borrow','/iLibrary/index.php/usermanage'];
+	var lacation = window.location.pathname;
+	var index = route.indexOf(lacation);
+	if (index == -1)
+	{
+		route = ['/iLibrary/index.php/index','/iLibrary/index.php/borrow/reserveRecord','/iLibrary/index.php/returnbook/search/1','/iLibrary/index.php/usermanage/search','/iLibrary/index.php/bookmanage/search','/iLibrary/index.php/borrow/search'];
+		index = route.indexOf(lacation);
+		if (index == -1)
+		{
+			route[0]='/iLibrary/';
+			route[5]='/iLibrary/index.php/returnbook/search';
+			index = route.indexOf(lacation);
+		}
+	}
+	$('.subsystem > li').eq(index).addClass('active');
+</script>

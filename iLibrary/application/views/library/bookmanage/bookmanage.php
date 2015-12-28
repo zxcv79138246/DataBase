@@ -10,14 +10,16 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-md-offset-8 col-md-1">
+		<div class="col-md-offset-6 col-md-1">
+			<a href="#" data-url="<?php echo site_url('bookmanage/createdata') ?>" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit-modal">新增其他資料</a>
+		</div>
+		<div class="col-md-offset-1 col-md-1">
 			<a href="#" data-url="<?php echo site_url('bookmanage/create') ?>" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit-modal">＋NEW</a>
 		</div>
 	</div>
 	<div class="row table-responsive">
 		<table class="table table-hover">
 			<tr>
-				<th>Book_ID</th>
 				<th>ISBN</th>
 				<th>書名</th>
 				<th>分類</th>
@@ -29,16 +31,15 @@
 				<th>Remove</th>
 			<?php foreach ($books as $key => $book): ?>
 			<tr>
-				<td><?php echo $book->b_id ?></td>
 				<td><?php echo $book->isbn ?></td>
-				<td><?php echo $book->name ?></td>
-				<td><?php echo $book->category ?></td>
-				<td><?php echo $book->authorName ?></td>
-				<td><?php echo $book->publisherName ?></td>
+				<td class="bookdata-name"><?php echo $book->name ?></td>
+				<td class="bookdata"><?php echo $book->category ?></td>
+				<td class="bookdata"><?php echo $book->authorName ?></td>
+				<td class="bookdata"><?php echo $book->publisherName ?></td>
 				<td><?php echo $book->publish_date ?></td>
 				<td><img class="img-thumbnail book-image" src="<?php echo $book->cover ?>" alt="<?php echo $book->name ?>"></td>
-				<td><a href="#" data-url="<?php echo site_url(['bookmanage/edit', $book->b_id]) ?>" class="btn btn-info btn-xs edit-btn" data-toggle="modal" data-target=".edit-modal">Edit</a></td>
-				<td><a href="<?php echo site_url(['bookmanage/destory', $book->b_id]) ?>" class="btn btn-danger btn-xs">Remove</a></td>			
+				<td><a href="#" data-url="<?php echo site_url(['bookmanage/edit', $book->isbn]) ?>" class="btn btn-info btn-xs edit-btn" data-toggle="modal" data-target=".edit-modal">Edit</a></td>
+				<td><a href="<?php echo site_url(['bookmanage/destory', $book->isbn]) ?>" class="btn btn-danger btn-xs">Remove</a></td>			
 			</tr>
 			<?php endforeach ?>
 		</table>
@@ -50,7 +51,7 @@
     	<div class="modal-content">
          	<div class="modal-header">
            		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      			<h3>會員資料</h3>
+      			<h3>書籍資料</h3>
       		</div>
       		<div class="modal-body" id="modal-body">
         		<p></p>
