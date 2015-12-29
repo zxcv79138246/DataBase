@@ -84,7 +84,7 @@ class Borrow_return_model extends CI_Model {
     {
         $this->db->select('count(id)');
         $this->db->from($this->table);
-        $thie->db->where('ssn',$ssn);
+        $this->db->where('ssn',$ssn);
         $this->db->where('return_date',NULL);
         $query = $this->db->get();
         return $query->result();

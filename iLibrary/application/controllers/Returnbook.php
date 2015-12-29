@@ -10,7 +10,7 @@ class Returnbook extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('borrow_return_model','borrow');
-		if ($this->session->userdata('priority') < 1)  	//判斷進入者權限
+		if ($this->session->userdata('priority') > 1)  	//判斷進入者權限
 		{
 			$this->session->set_flashdata('message', '權限不足');
 			$this->session->set_flashdata('type', 'danger');
@@ -48,12 +48,12 @@ class Returnbook extends CI_Controller
 			}
 		}else
 		{
-			$borrows = $this->borrow->search(['user.ssn','user.name','book.isbn','book.name','borrow_return.c_id','borrow_return.loan_date'],$condition);
+			$borrows = $this->borrow->search(['book.isbn','book.name','borrow_return.c_id','borrow_return.loan_date'],$condition);
 			if (!$borrows)
 			{
 				$this->session->set_flashdata('message', "搜尋不到相關借書記錄");
 				$this->session->set_flashdata('type', 'danger');
-				$this->borrowRecord();
+				redirect('returnbook/borrowRecord');
 			}else
 			{
 				$this->load->view('layout/header');

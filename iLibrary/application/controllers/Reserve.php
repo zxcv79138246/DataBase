@@ -20,12 +20,14 @@ class Reserve extends CI_Controller
 		$copyNum = $this->copy->copyNum($isbn);
 		$reserveNum = $this->reserve->hasReserveNum($isbn);
 		$reserveCount = $this->reserve->reserveCount($ssn);
+		$field = 'count(id)';
+		
 		if (!$ssn){
 			echo json_encode(['message'=>'請先登入帳號','status'=>'danger']);
 		}else if ($copyNum[0]->copyNum == $reserveNum[0]->reserveNum)
 		{
 			echo json_encode(['message'=>'已被預約滿,無法預約','status'=>'danger']);
-		}else if($reserveCount>2)
+		}else if($reserveCount[0]->$field > 2)
 		{
 			echo json_encode(['message'=>'已預約3本書,無法再預約書籍','status'=>'danger']);
 		}else{			

@@ -11,7 +11,7 @@ class Borrow extends CI_Controller
 		parent::__construct();
 		$this->load->model('reserve_model','reserve');
 		$this->load->model('borrow_return_model','borrow');
-		if ($this->session->userdata('priority') < 1)  	//判斷進入者權限權限
+		if ($this->session->userdata('priority') > 1)  	//判斷進入者權限權限
 		{
 			$this->session->set_flashdata('message', '權限不足');
 			$this->session->set_flashdata('type', 'danger');
@@ -72,7 +72,8 @@ class Borrow extends CI_Controller
 	public function borrowbook($c_id,$ssn)
 	{
 		$borrowCount = $this->borrow->borrowCount($ssn);
-		if ($borrowCount<10)
+		$filed = 'count(id)';
+		if ($borrowCount[0]->filed < 10)
 		{
 			$this->borrow->insert($c_id,$ssn);
 			$this->destory($c_id,1);

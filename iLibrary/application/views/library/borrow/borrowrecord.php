@@ -20,8 +20,7 @@
 				<th>ISBN</th>
 				<th>C_ID</th>
 				<th>書名</th>
-				<th>SSN</th>
-				<th>姓名</th>
+				<th>封面</th>
 				<th>借書日期</th>
 				<th>還書日期</th>
 			<?php if ($borrows!=NULL): ?>
@@ -30,10 +29,10 @@
 						<td><?php echo $borrow->isbn ?></td>
 						<td><?php echo $borrow->c_id ?></td>
 						<td><?php echo $borrow->bookName ?></td>
-						<td><?php echo $borrow->ssn ?></td>
-						<td><?php echo $borrow->userName ?></td>
+						<td><img class="book-image" src="<?php echo $borrow->cover ?>"></td>
 						<td><?php echo $borrow->loan_date ?></td>
 						<td><?php echo ($borrow->return_date!=NULL)? $borrow->return_date : '尚未歸還' ?></td>
+
 					</tr>
 				<?php endforeach ?>
 			<?php endif ?>
