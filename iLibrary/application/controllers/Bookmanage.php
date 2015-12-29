@@ -13,7 +13,7 @@ class Bookmanage extends CI_Controller
 		$this->load->model('author_model','author');
 		$this->load->model('category_model','category');
 		$this->load->model('publisher_model','publisher');
-		if ($this->session->userdata('priority')!=2) //判斷進入者權限權限
+		if ($this->session->userdata('priority')!=1) //判斷進入者權限權限
 		{
 			$this->session->set_flashdata('message', '權限不足');
 			$this->session->set_flashdata('type', 'danger');
