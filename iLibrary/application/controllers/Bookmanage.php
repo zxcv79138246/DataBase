@@ -13,6 +13,7 @@ class Bookmanage extends CI_Controller
 		$this->load->model('author_model','author');
 		$this->load->model('category_model','category');
 		$this->load->model('publisher_model','publisher');
+		$this->load->model('copy_book_model','copy');
 		if ($this->session->userdata('priority')!=1) //判斷進入者權限權限
 		{
 			$this->session->set_flashdata('message', '權限不足');
@@ -48,7 +49,8 @@ class Bookmanage extends CI_Controller
 		$categorys = $this->category->all();
 		$publishers = $this->publisher->all();
 		$book = $this->book->findBookEdit($isbn);
-		$this->load->view('library/bookmanage/edit',compact('book','authors','categorys','publishers'));
+		$copyNum=$this->copy->copyNum($isbn);
+		$this->load->view('library/bookmanage/edit',compact('book','authors','categorys','publishers','copyNum'));
 	}
 
 	public function update ($isbn)
@@ -56,7 +58,14 @@ class Bookmanage extends CI_Controller
 		if ($this->verification())
 		{
 			$bookdata = $this->input->post();     //抓取頁面所有post
-			if (!$this->book->duplicateCheck(['isbn' => $bookdata['isbn']])) 
+
+			$nowfield = $this->book->findNowField($isbn);
+			$nameChange=0;
+			if ($bookdata['isbn']!=$nowfield->isbn){
+				$nameChange = 1;
+			}
+				
+			if (!$this->book->duplicateCheck(['isbn' => $bookdata['isbn']],$nameChange)) 
 			{
 				$books = $this->book->update($bookdata,['isbn'=> $isbn]);
 				if ($books)
@@ -224,5 +233,23 @@ class Bookmanage extends CI_Controller
 			$this->load->view('layout/footer');
 		}
 		
+	}
+
+	public function addCopy($isbn)
+	{
+		if($this->copy->insert(['isbn'=>$isbn]))
+		{
+			echo json_encode(['message'=>"ISBN：$isbn  新增一本copy",'status'=>'success']);
+		}
+	}
+
+	public function deleteCopy($isbn)
+	{
+		if($this->copy->deleteOneCopy(['isbn'=>$isbn]))
+		{
+			echo json_encode(['message'=>"ISBN：$isbn  刪除一本copy",'status'=>'warning']);
+		}else{
+			echo json_encode(['message'=>"無法刪除 所有書都已被預約或借出",'status'=>'danger']);
+		}
 	}
 }

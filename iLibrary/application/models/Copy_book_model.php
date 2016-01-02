@@ -45,6 +45,22 @@ class Copy_book_model extends CI_Model {
     	return $result;
     }
 
+    public function deleteOneCopy($isbn)
+    {
+        $this->db->select('copy_book.c_id');
+        $this->db->from($this->table);
+        $this->db->join('borrow_return','copy_book.c_id = borrow_return.c_id','left');
+        $this->db->join('reserve','reserve.c_id = copy_book.c_id','left');
+        $this->db->where('reserve.date',NULL);
+        $this->db->where('borrow_return.return_date',NULL);
+        $this->db->where('copy_book.isbn',$isbn['isbn']);
+        $this->db->limit(1);
+        $query=$this->db->get();
+        $c_id = $query->result()[0]->c_id;
+        $result = $this->db->delete($this->table, ['c_id' => $c_id]);
+        return ($result)? $result : false;
+    }
+
     public function destory($condition)
     {
     	$data = $this->where($condition);

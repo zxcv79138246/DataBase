@@ -64,7 +64,7 @@ class Borrow extends CI_Controller
 				}
 				redirect('/borrow');
 			}else{
-
+				$this->reserveRecord();
 			}
 		}	
 	}
@@ -87,7 +87,7 @@ class Borrow extends CI_Controller
 
 	public function reserveRecord()
 	{
-		$reserves = $this->reserve->borrowSearch(['user.ssn'],$this->session->userdata('ssn'));
+		$reserves = $this->reserve->reserveRecord($this->session->userdata('ssn'));
 		$this->load->view('layout/header');
 		$this->load->view('layout/navbar');			
 		$this->load->view('library/reserve/reserverecord', compact('reserves'));

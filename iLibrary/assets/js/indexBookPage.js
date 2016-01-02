@@ -49,7 +49,7 @@ $(function() {
             type: 'get',
             success: function(response) {
                 $('#modal-body').html(response);
-                var isbn = $(response).find('#isbn').text();
+                var isbn = $(response).find('#isbn').text();  //預約
                 // binding reservebook event on reserve-btn
                 $('.reserve-btn').on('click', function() {
                     $.ajax({
@@ -66,6 +66,8 @@ $(function() {
                                 type: response.status,
                                 position: 'top-center'
                             });
+                            if (response.status == 'success')
+                                $('.reserveNum').text(parseInt($('.reserveNum').text())+1);
                         });
 
                 })

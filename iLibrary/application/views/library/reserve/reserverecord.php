@@ -25,7 +25,7 @@
 						<td><?php echo $reserve->userName ?></td>
 						<td><?php echo $reserve->date ?></td>
 						<td class="bookstate"><?php echo (($reserve->return_date != NULL && $reserve->loan_date != null) || $reserve->loan_date == NULL) ? '可借書'  : '書籍尚未歸還' ?></td>
-						<td><a href="<?php echo site_url(['borrow/destory',$reserve->reserveC_id]) ?>" class="btn btn-danger btn-xs">取消預約</a></td>			
+						<td><a href="<?php echo site_url(['borrow/destory',$reserve->reserveC_id,0, 1]) ?>" class="btn btn-danger btn-xs">取消預約</a></td>			
 					</tr>
 				<?php endforeach ?>
 			<?php endif ?>

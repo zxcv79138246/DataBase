@@ -4,7 +4,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">ISBN</label>
 				<div class="col-md-8">
-					<input type="text" class="form-control" name="isbn" value="<?php echo (validation_errors()) ? set_value('isbn') : $book->isbn; ?>">
+					<input type="text" class="form-control" id="isbn" name="isbn" value="<?php echo (validation_errors()) ? set_value('isbn') : $book->isbn; ?>">
 				</div>
 			</div>
 			<div class="form-group">
@@ -46,7 +46,17 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">出版日期</label>
 				<div class="col-md-8">
-					<input type="date" class="form-control" name="publish_date" value="<?php echo (validation_errors()) ? set_value('publish_date') : $book->publish_date; ?>">
+					<input type="type" class="form-control" name="publish_date" value="<?php echo (validation_errors()) ? set_value('publish_date') : $book->publish_date; ?>">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">書本數</label>
+				<div class="form-group control-label">
+					<div class="col-md-1">
+						<p class="copyNum"><?php echo $copyNum[0]->copyNum ?></p>
+					</div>
+					<a class="btn btn-info btn-xs col-md-1 copy-add">+</a>
+					<a class="btn btn-danger btn-xs col-md-1 copy-delete">-</a>
 				</div>
 			</div>
 		</div>

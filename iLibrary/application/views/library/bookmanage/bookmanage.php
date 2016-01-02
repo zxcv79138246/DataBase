@@ -67,8 +67,49 @@
 				url: $(this).data('url'),
 				type: 'get',
 				success:function (response){
-					console.log(response);
 					$('#modal-body').html(response);
+					var isbn = $(response).find('#isbn').val();    //編輯copyNum
+					console.log(isbn);
+	                // binding add copy delete copy event on edit-btn    
+	                $('.copy-add').on('click', function() {
+	                    $.ajax({
+	                            url: '/iLibrary/index.php/bookmanage/addCopy/' + isbn,
+	                            type: 'POST',
+	                            dataType: 'JSON',
+	                            data: {
+	                                isbn: isbn
+	                            },
+	                        })
+	                        .success(function(response) {
+	                            $.smkAlert({
+	                                text: response.message,
+	                                type: response.status,
+	                                position: 'top-center'
+	                            });
+	                            $('.copyNum').text(parseInt($('.copyNum').text()) + 1);
+	                        });
+
+	                })
+
+	                $('.copy-delete').on('click', function() {
+	                    $.ajax({
+	                            url: '/iLibrary/index.php/bookmanage/deleteCopy/' + isbn,
+	                            type: 'POST',
+	                            dataType: 'JSON',
+	                            data: {
+	                                isbn: isbn
+	                            },
+	                        })
+	                        .success(function(response) {
+	                            $.smkAlert({
+	                                text: response.message,
+	                                type: response.status,
+	                                position: 'top-center'
+	                            });
+	                            $('.copyNum').text(parseInt($('.copyNum').text()) - 1);
+	                        });
+
+	                })
 				}
 			})
 		});

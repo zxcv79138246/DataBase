@@ -49,7 +49,14 @@ class Usermanage extends CI_Controller
 		if ($this->verification())
 		{
 			$userdata = $this->input->post();     //抓取頁面所有post
-			if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']])) 
+
+			$nowfield = $this->user->find($ssn);
+			$nameChange=0;
+			if ($userdata['ssn']!=$nowfield->ssn){
+				$nameChange = 1;
+			}
+
+			if (!$this->user->duplicateCheck(['ssn' => $userdata['ssn'], 'email' => $userdata['email']],$nameChange)) 
 			{
 				if ($users = $this->user->update($userdata,['ssn'=> $ssn]))
 				{

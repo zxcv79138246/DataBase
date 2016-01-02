@@ -41,8 +41,9 @@
 			<label class="control-label">書本數： <?php echo $copyNum[0]->copyNum; ?> </label>
 		</div>
 		<div class="col-md-3">
-			<label class="control-label">被預約數：  <?php echo $reserveNum[0]->reserveNum; ?> </label>
+			<label class="control-label">被預約數：</label> <label class="control-label reserveNum"><?php echo $reserveNum[0]->reserveNum; ?></label>
 		</div>
+			
 		<div class="col-md-3">
 			<label class="control-label">被借閱數：  <?php echo $hasBorrowNum[0]->hasBorrowNum; ?> </label>
 		</div>

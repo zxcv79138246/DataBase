@@ -18,7 +18,7 @@
 				<div class="col-md-8">
 					<select class="form-control" name="category">
 						<?php foreach ($categorys as $key => $category): ?>
-							<option ><?php echo $category->category ?></option>
+							<option value = "<?php echo $category->id ?>"><?php echo $category->category ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>
@@ -28,7 +28,7 @@
 				<div class="col-md-8">
 					<select class="form-control" name="author_id">
 						<?php foreach ($authors as $key => $author): ?>
-								<option ><?php echo $author->name ?></option>
+								<option value = "<?php echo $author->id ?>"><?php echo $author->name ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>
@@ -38,7 +38,7 @@
 				<div class="col-md-8">
 					<select class="form-control" name="publisher_id">
 						<?php foreach ($publishers as $key => $publisher): ?>
-								<option ><?php echo $publisher->name ?></option>
+								<option value = "<?php echo $publisher->id ?>"><?php echo $publisher->name ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>

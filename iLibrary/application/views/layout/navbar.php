@@ -7,18 +7,18 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo site_url('/index') ?>">
+			<a class="navbar-brand iLibrary_icon" href="<?php echo site_url('/index') ?>">
 				<span class="glyphicon glyphicon-book"></span> iLibary
 			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="nav navbar-nav subsystem">
-				<li style="<?php echo ($this->session->userdata('priority')<2)? : 'display:none'  ?>"><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
-				<li style="<?php echo ($this->session->userdata('priority')<2 && ($this->session->userdata('priority') != null))? : 'display:none'  ?>"><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>
-				<li style="<?php echo ($this->session->userdata('priority')<2 && ($this->session->userdata('priority') != null))? : 'display:none'  ?>"><a href="<?php echo site_url('/returnbook/borrowRecord') ?>">借書紀錄</a></li>
-				<li style="<?php echo ($this->session->userdata('priority')!=2)? 'display:none' : '' ?>"><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
-				<li style="<?php echo ($this->session->userdata('priority')!=1)? 'display:none' : '' ?>"><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
-				<li style="<?php echo ($this->session->userdata('priority')!=1)? 'display:none' : '' ?>"><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
+				<li id ="book_sub" style="<?php echo ($this->session->userdata('priority')<2)? : 'display:none'  ?>"><a href="<?php echo site_url('/index') ?>">圖書庫</a></li>
+				<li id ="reserve_sub" style="<?php echo ($this->session->userdata('priority')<2 && ($this->session->userdata('priority') != null))? : 'display:none'  ?>"><a href="<?php echo site_url('/borrow/reserveRecord') ?>">預約追蹤</a></li>
+				<li id ="borrowRecord_sub" style="<?php echo ($this->session->userdata('priority')<2 && ($this->session->userdata('priority') != null))? : 'display:none'  ?>"><a href="<?php echo site_url('/returnbook/borrowRecord') ?>">借書紀錄</a></li>
+				<li id ="member_sub" style="<?php echo ($this->session->userdata('priority')!=2)? 'display:none' : '' ?>"><a href="<?php echo site_url('/usermanage') ?>">會員管理</a></li>
+				<li id ="bookmanage_sub" style="<?php echo ($this->session->userdata('priority')!=1)? 'display:none' : '' ?>"><a href="<?php echo site_url('/bookmanage') ?>">書籍管理</a></li>
+				<li id ="borrowReturn_sub" style="<?php echo ($this->session->userdata('priority')!=1)? 'display:none' : '' ?>"><a href="<?php echo site_url('/borrow') ?>">借/還書管理</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ($this->session->ssn): ?>
@@ -98,19 +98,52 @@
 </div><!-- /.modal -->
 
 <script>
-	var route = ['/iLibrary/index.php/index','/iLibrary/index.php/borrow/reserveRecord','/iLibrary/index.php/returnbook/borrowRecord','/iLibrary/index.php/usermanage','/iLibrary/index.php/bookmanage','/iLibrary/index.php/borrow','/iLibrary/index.php/usermanage'];
-	var lacation = window.location.pathname;
-	var index = route.indexOf(lacation);
-	if (index == -1)
+	
+	var index = localStorage.getItem("library");	//library index
+	
+	if(window.location.pathname == '/iLibrary/index.php/index' || window.location.pathname == '/iLibrary/');
 	{
-		route = ['/iLibrary/index.php/index','/iLibrary/index.php/borrow/reserveRecord','/iLibrary/index.php/returnbook/search/1','/iLibrary/index.php/usermanage/search','/iLibrary/index.php/bookmanage/search','/iLibrary/index.php/borrow/search'];
-		index = route.indexOf(lacation);
-		if (index == -1)
-		{
-			route[0]='/iLibrary/';
-			route[5]='/iLibrary/index.php/returnbook/search';
-			index = route.indexOf(lacation);
-		}
+		localStorage.setItem("library", "0");
 	}
-	$('.subsystem > li').eq(index).addClass('active');
+
+	if(window.location.pathname == '/iLibrary/index.php/usermanage')
+	{
+		localStorage.setItem("library", "3");
+	}
+
+	$('.iLibrary_icon').click(function(event) {
+		localStorage.setItem("library", "0");
+	});
+
+	$('#book_sub').click(function(event) {		
+		localStorage.setItem("library", "0");
+	});
+
+	$('#reserve_sub').click(function(event) {
+		localStorage.setItem("library", "1");
+	});
+
+	$('#borrowRecord_sub').click(function(event) {
+		localStorage.setItem("library", "2");
+	});
+
+	$('#member_sub').click(function(event) {
+		localStorage.setItem("library", "3");
+	});
+
+	$('#bookmanage_sub').click(function(event) {
+		localStorage.setItem("library", "4");
+	});
+
+	$('#borrowReturn_sub').click(function(event) {
+		localStorage.setItem("library", "5");
+	});
+	
+	if (index != -1)
+	{
+		$('.subsystem > li').eq(index).addClass('active');
+	}else {
+		$('.subsystem > li').removeClass('active');
+	}
+
 </script>

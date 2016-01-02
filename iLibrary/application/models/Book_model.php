@@ -25,6 +25,15 @@ class Book_model extends CI_Model {
         return ($query->result()) ? $query->result() : false;
     }
 
+    public function findNowField($isbn)
+    {
+        $query = $this->db->get_where($this->table, ['isbn' => $isbn]);
+        if ($query->result())
+            return $query->result()[0];
+        else
+            return false;
+    }
+
     public function findBookEdit($isbn)
     {
         $query = $this->db->get_where($this->table,['isbn' => $isbn]);

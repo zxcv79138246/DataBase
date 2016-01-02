@@ -59,8 +59,27 @@ class Reserve_model extends CI_Model {
         $this->db->join('user','user.ssn = reserve.ssn');
         $this->db->join('borrow_return','borrow_return.c_id=reserve.c_id','left');
         foreach ($fields as $field) {
-            $this->db->or_where($field, $condition);
+            $this->db->or_like($field, $condition);
         }
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function reserveRecord($ssn)
+    {
+        $this->db->select('*');
+        $this->db->select('book.name as bookName');
+        $this->db->select('user.name as userName');
+        $this->db->select('user.ssn as userSSN');
+        $this->db->select('reserve.ssn as reserveSSN');
+        $this->db->select('reserve.c_id as reserveC_id');
+        $this->db->from($this->table);
+        $this->db->join('copy_book','copy_book.c_id = reserve.c_id');
+        $this->db->join('book','book.isbn = copy_book.isbn');
+        $this->db->join('user','user.ssn = reserve.ssn');
+        $this->db->join('borrow_return',"borrow_return.c_id=reserve.c_id and borrow_return.ssn != {$ssn} ",'left');
+        $this->db->where('reserve.ssn', $ssn);
+
         $query = $this->db->get();
         return $query->result();
     }
