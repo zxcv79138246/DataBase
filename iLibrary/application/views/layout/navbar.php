@@ -101,7 +101,7 @@
 	
 	var index = localStorage.getItem("library");	//library index
 	
-	if(window.location.pathname == '/iLibrary/index.php/index' || window.location.pathname == '/iLibrary/');
+	if(window.location.pathname == '/iLibrary/');
 	{
 		localStorage.setItem("library", "0");
 	}

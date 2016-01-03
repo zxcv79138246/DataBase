@@ -73,13 +73,13 @@ class Borrow extends CI_Controller
 	{
 		$borrowCount = $this->borrow->borrowCount($ssn);
 		$filed = 'count(id)';
-		if ($borrowCount[0]->filed < 10)
+		if ($borrowCount[0]->filed < 3)
 		{
 			$this->borrow->insert($c_id,$ssn);
 			$this->destory($c_id,1);
 		}else
 		{
-			$this->session->set_flashdata('message', "已借10本書,請歸還書籍後才能再借其他書");
+			$this->session->set_flashdata('message', "已借3本書,請歸還書籍後才能再借其他書");
 			$this->session->set_flashdata('type', 'danger');
 			redirect('/borrow');
 		}

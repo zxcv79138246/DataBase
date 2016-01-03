@@ -74,7 +74,7 @@ class Login extends CI_Controller
 				{
 					$query=$this->user->update(['password'=>$newpassword],['ssn'=>$ssn]);
 					if ($query){
-						$this->session->unset_userdata(['ssn','name','priority']);
+						$this->session->unset_userdata(['ssn','name','priority','password']);
 						$this->session->set_flashdata('message', "密碼修改成功,請重新登入");
 						$this->session->set_flashdata('type', 'success');
 						redirect('/index');
